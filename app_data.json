@@ -1,0 +1,36 @@
+{
+    "cards": [
+        { "id": 1, "title": "Paranoico", "description": "Daño crítico recibido -30%<br><strong class='nerf-text'>Probabilidad crítica -300%</strong>" },
+        { "id": 2, "title": "Adicción", "description": "Curación +15%<br>Tiempo de reutilización de medicina -25%<br><strong class='nerf-text'>Daño por veneno recibido +150%</strong>" },
+        { "id": 3, "title": "Flagelante", "description": "La salud y la curación aumentan un 1% con cada ataque. (Se acumula hasta 100 veces. Tiempo de reutilización: 3 segundos). <br><strong class='nerf-text'>Al atacar, hay un 66% de probabilidad de infligirte daño a ti mismo igual al 88% del daño inflingido y causar sangrado severo</strong>" },
+        { "id": 4, "title": "Yggdrasil", "description": "Sabiduría +15%<br>Reducción de hambre -75%<br><strong class='nerf-text'>Daño critico -50%</strong>" },
+        { "id": 5, "title": "Devorador", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 6, "title": "Hechicero herético", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 7, "title": "Norseman", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 8, "title": "Mano de muerte", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 9, "title": "Arquitecto", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 10, "title": "Inestable", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 11, "title": "Apóstata", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 12, "title": "Cuchilla de Kroxigar", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 13, "title": "Rey esqueleto", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 14, "title": "Cadáver congelado", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 15, "title": "Fiesta de guerra", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 16, "title": "Infestación demoníaca", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 17, "title": "Carne distorsionada", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 18, "title": "Pared protectora", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 19, "title": "Nautilio", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 20, "title": "Poseído por el espíritu", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 21, "title": "Visión impía", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 22, "title": "Exilio", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 23, "title": "Tirano", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 24, "title": "Ominoso hombre volador", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 25, "title": "Rabia primitiva", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 26, "title": "Golem", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 27, "title": "Vengador", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 28, "title": "Bruja", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 29, "title": "El horror de Eldritch", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 30, "title": "Traidor", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 31, "title": "El enfermo", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 32, "title": "Verdugo", "description": "Los secretos de este pacto aún no han sido revelados." }
+    ],
+    "collaborators": [],
+    "changelog": {
+        "version": "Beta pública: v2.7",
+        "changes": [
+            "<strong>¡Compatibilidad Mejorada!</strong> La página ahora está completamente optimizada para dispositivos táctiles, móviles y consolas, garantizando una experiencia fluida en cualquier plataforma.",
+            "<strong>Mejoras de Interfaz:</strong> Se renombró el panel de ajustes a \"Personalizar Página\" y se ha mejorado la legibilidad de todos los textos sobre fondos de piedra para que no se pierda ningún detalle de los pactos.",
+            "<strong>¡Sección de Colaboradores!</strong> Un nuevo espacio para agradecer a quienes ayudan a que el Grimorio crezca y mejore.",
+            "<strong>Corrección General de Errores:</strong> Se han solucionado múltiples errores internos para hacer la navegación más estable y se ha mejorado la animación de aparición de las cartas.",
+            "La versión anterior v3.3 ha sido consolidada en esta beta pública."
+        ]
+    },
+    "ui_text": {
+        "identify_prompt": "Identificar"
+    }
+}
