@@ -1,43 +1,59 @@
 {
     "cards": [
-        { "id": 1, "title": "Paranoico", "description": "Daño crítico recibido -30%<br><strong class='nerf-text'>Probabilidad crítica -300%</strong>" },
-        { "id": 2, "title": "Adicción", "description": "Curación +15%<br>Tiempo de reutilización de medicina -25%<br><strong class='nerf-text'>Daño por veneno recibido +150%</strong>" },
-        { "id": 3, "title": "Flagelante", "description": "La salud y la curación aumentan un 1% con cada ataque. (Se acumula hasta 100 veces. Tiempo de reutilización: 3 segundos). <br><strong class='nerf-text'>Al atacar, hay un 66% de probabilidad de infligirte daño a ti mismo igual al 88% del daño infligido y causar sangrado severo</strong>" },
-        { "id": 4, "title": "Yggdrasil", "description": "Sabiduría +15%<br>Reducción de hambre -75%<br><strong class='nerf-text'>Daño critico -50%</strong>" },
-        { "id": 5, "title": "Devorador", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 6, "title": "Hechicero herético", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 7, "title": "Norseman", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 8, "title": "Mano de muerte", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 9, "title": "Arquitecto", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 10, "title": "Inestable", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 11, "title": "Apóstata", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 12, "title": "Cuchilla de Kroxigar", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 13, "title": "Rey esqueleto", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 14, "title": "Cadáver congelado", "description": "50% de probabilidad de resistir el efecto de congelación<br>Daño elemental recibido -24%<br><strong class='nerf-text'>Daño físico recibido +38%</strong><br><strong class='nerf-text'>Velocidad de movimiento -20%</strong>" },
-        { "id": 15, "title": "Fiesta de guerra", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 16, "title": "Infestación demoníaca", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 17, "title": "Carne distorsionada", "description": "Salud +50%<br>Constitución +25%<br><strong class='nerf-text'>Todas las velocidades -50%</strong><br><strong class='nerf-text'>Bono de velocidad y agilidad -50%</strong>" },
-        { "id": 18, "title": "Pared protectora", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 19, "title": "Nautilus", "description": "Escudo +18%<br>duración del escudo +15%<br>Daño recibido cuando se está protegido -30%<br><strong class='nerf-text'>Daño entrante +30% (Cuando no está protegido)</strong><br><strong class='nerf-text'>Daño crítico total -50%</strong>" },
-        { "id": 20, "title": "Poseído por el espíritu", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 21, "title": "Visión impía", "description": "daño crítico +25%<br>1% de probabilidad de infligir un 50% mas de daño crítico<br><strong class='nerf-text'>Reducción del 66% del daño en golpes no críticos</strong>" },
-        { "id": 22, "title": "Exilio", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 23, "title": "Tirano", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 24, "title": "Ominoso hombre volador", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 25, "title": "Rabia primitiva", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 26, "title": "Golem", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 27, "title": "Vengador", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 28, "title": "Bruja", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 29, "title": "El horror de Eldritch", "description": "Los secretos de este pacto aún no han sido revelados." }, { "id": 30, "title": "Traidor", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 1, "title": "Paranoico", "description": "Daño crítico recibido -30%<br><strong class=\"nerf-text\">Probabilidad crítica -300%</strong>" },
+        { "id": 2, "title": "Adicción", "description": "Curación +15%<br>Tiempo de reutilización de medicina -25%<br><strong class=\"nerf-text\">Daño por veneno recibido +150%</strong>" },
+        { "id": 3, "title": "Flagelante", "description": "La salud y la curación aumentan un 1% con cada ataque. (Se acumula hasta 100 veces. Tiempo de reutilización: 3 segundos). <br><strong class=\"nerf-text\">Al atacar, hay un 66% de probabilidad de infligirte daño a ti mismo igual al 88% del daño infligido y causar sangrado severo</strong>" },
+        { "id": 4, "title": "Yggdrasil", "description": "Sabiduría +15%<br>Reducción de hambre -75%<br><strong class=\"nerf-text\">Daño critico -50%</strong>" },
+        { "id": 5, "title": "Devorador", "description": "Al matar a un enemigo, restaura el 12% de la salud perdida y reduce el hambre. Penetración de defensa +8%.<br><strong class=\"nerf-text\">La defensa disminuye en un 1% cada vez que se mata a un enemigo. (Dura hasta el final de la batalla).</strong>" },
+        { "id": 6, "title": "Piedra Filosofal", "description": "Generas lentamente Chatarra con el tiempo.<br><strong class=\"nerf-text\">Recibes un +50% más de daño en la durabilidad de tu equipo.</strong>" },
+        { "id": 7, "title": "Nórdico", "description": "+10% de fuerza, +15% de daño de ataque especial.<br><strong class=\"nerf-text\">No puede obtener bonificación de los atributos de inteligencia y sabiduría.</strong>" },
+        { "id": 8, "title": "Mano de la Muerte", "description": "Al hacer una recarga súper crítica, el daño se incrementa en un 15% por 2.5 segundos, se restaura el 15% de la salud perdida y se eliminan todos los efectos negativos.<br><strong class=\"nerf-text\">Si la recarga súper crítica no se activa, implosionas y mueres instantáneamente. Mientras usas armas cuerpo a cuerpo o armas que no requieren recarga, recibes un 12% más de daño.</strong>" },
+        { "id": 9, "title": "Asesino a Sueldo", "description": "Daño de espada +12%.<br>Daño de veneno +15%.<br><strong class=\"nerf-text\">Daño por explosión recibido +33%.</strong>" },
+        { "id": 10, "title": "Infestación Demoníaca", "description": "Prende a los enemigos al golpear. El tiempo de reutilización de las habilidades se reduce en un 20% mientras están ardiendo. +15% de daño de fuego.<br><strong class=\"nerf-text\">5% de probabilidad de recibir un 500% de daño adicional.</strong>" },
+        { "id": 11, "title": "Luna de Sangre", "description": "Daño en la noche +25%.<br>Curación del enemigo -25%.<br><strong class=\"nerf-text\">Daño recibido en la noche +50%.</strong>" },
+        { "id": 12, "title": "Cuchilla de Kroxigar", "description": "Activa Cuchilla Giratoria.<br>Añade el 5% de Fuerza como daño adicional al daño de Cuchilla Giratoria.<br>Daño total de Cuchilla Giratoria +25%.<br><strong class=\"nerf-text\">La Cuchilla Giratoria inflige más daño al usuario y aliados.</strong>" },
+        { "id": 13, "title": "Muro de Escudo", "description": "Daño a distancia recibido -18%.<br>Escudo +15%.<br><strong class=\"nerf-text\">Debes equipar un escudo para obtener los bonos. El escudo recibe 2.5 veces más daño de durabilidad. Si no tienes escudo, recibes un 50% de daño adicional.</strong>" },
+        { "id": 14, "title": "Cadáver Congelado", "description": "Recibes -24% de daño.<br><strong class=\"nerf-text\">+38% de daño físico recibido y -20% de velocidad de movimiento.</strong>" },
+        { "id": 15, "title": "Grupo de guerra", "description": "Daño de aliados +15% y daño recibido por aliados -8%.<br><strong class=\"nerf-text\">Si no hay un compañero o este está caído, el daño recibido aumenta en un 50%.</strong>" },
+        { "id": 16, "title": "El Contagiado", "description": "Propaga una plaga mortal a los enemigos cercanos.<br>Daño de virus +10%.<br><strong class=\"nerf-text\">También te infectas y recibes daño con el tiempo.</strong>" },
+        { "id": 17, "title": "Carne Distorsionada", "description": "+25% de salud, +25% de constitución.<br><strong class=\"nerf-text\">-50% de todas las velocidades y -50% de la bonificación de velocidad de agilidad.</strong>" },
+        { "id": 18, "title": "Ejecutor", "description": "Inflige 10% más de daño a enemigos con menos de 33% de salud.<br><strong class=\"nerf-text\">Recibe daño verdadero equivalente a 12% de la salud total al matar a un enemigo.</strong>" },
+        { "id": 19, "title": "Nautilus", "description": "Escudo +18%<br>duración del escudo +15%<br>Daño recibido cuando se está protegido -30%<br><strong class=\"nerf-text\">Daño entrante +30% (Cuando no está protegido)</strong><br><strong class=\"nerf-text\">Daño crítico total -50%</strong>" },
+        { "id": 20, "title": "Horror Eldritch", "description": "Regeneración de salud +0.25%.<br>10% de probabilidad de invocar un tentáculo al atacar.<br><strong class=\"nerf-text\">El tentáculo es hostil. Daño por fuego recibido +25%</strong>" },
+        { "id": 21, "title": "Visión impía", "description": "daño crítico +25%<br>1% de probabilidad de infligir un 50% mas de daño crítico<br><strong class=\"nerf-text\">Reducción del 66% del daño en golpes no críticos</strong>" },
+        { "id": 22, "title": "Eclipse", "description": "Daño físico +12%, penetración elemental +12%.<br><strong class=\"nerf-text\">defensa -25% y enfriamiento de habilidades +15%.</strong>" },
+        { "id": 23, "title": "Tirano", "description": "Si el compañero está vivo o ausente, el daño infligido se reduce en un 20%.<br><strong class=\"nerf-text\">Cada vez que tu compañero cae, su salud base disminuye permanentemente en 1. También ganas algunos retazos y causas un 11% más de daño.</strong>" },
+        { "id": 24, "title": "Holandés Errante Ominoso", "description": "Probabilidad de esquivar +25%, rareza +25%, probabilidad de caída de objetos legendarios +1% <br><strong class=\"nerf-text\">y daño físico -25%.</strong>" },
+        { "id": 25, "title": "Locura", "description": "Velocidad de ataque total +15%<br>Resistencia a la lentitud +25%<br><strong class=\"nerf-text\">Daño crítico recibido +35%, Puede caer repentinamente en miedo.</strong>" },
+        { "id": 26, "title": "Golem", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 27, "title": "Vengador", "description": "Los secretos de este pacto aún no han sido revelados." },
+        { "id": 28, "title": "Bruja", "description": "Duración del debuff -12%.<br>Duración del debuff en enemigos +25%.<br><strong class=\"nerf-text\">Tiempo de reutilización de habilidad +35%.</strong>" },
+        { "id": 29, "title": "El horror de Eldritch", "description": "Regeneración de salud +0.25%<br>10% de probabilidad de invocar un tentáculo al atacar.<br><strong class=\"nerf-text\">El tentáculo es hostil. Daño por fuego recibido +25%.</strong>" },
+        { "id": 30, "title": "Traidor", "description": "Los secretos de este pacto aún no han sido revelados." },
         { "id": 31, "title": "El enfermo", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 32, "title": "Verdugo", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 33, "title": "Wendigo", "description": "Robo de vida +5%<br>Daño cuerpo a cuerpo recibido -10%<br><strong class='nerf-text'>Daño a distancia recibido +20%</strong>" },
-        { "id": 34, "title": "Monje Ciego", "description": "Tiempo de enfriamiento de habilidad -20%<br>Daño desarmado +40%<br>Daño de carga +7%<br><strong class='nerf-text'>Probabilidad de fallar +35%</strong>" }
+        { "id": 32, "title": "Verdugo", "description": "Inflige 10% más de daño a enemigos con menos de 33% de salud.<br><strong class=\"nerf-text\">Recibe daño verdadero equivalente a 12% de la salud total al matar a un enemigo.</strong>" },
+        { "id": 33, "title": "Wendigo", "description": "Daño vampiro +5%, daño cuerpo a cuerpo recibido -10%<br><strong class=\"nerf-text\">y daño a distancia recibido +20%.</strong>" },
+        { "id": 34, "title": "Monje Ciego", "description": "Tiempo de enfriamiento de habilidad -20%<br>Daño desarmado +40%<br>Daño de carga +7%<br><strong class=\"nerf-text\">Probabilidad de fallar +25%</strong>" }
     ],
-    "collaborators": [],
     "changelog": {
-        "version": "Beta pública: v2.7",
+        "version": "Beta v3.7 - Pacto de Rendimiento",
         "changes": [
-            "<strong>¡Compatibilidad Mejorada!</strong> La página ahora está completamente optimizada para dispositivos táctiles, móviles y consolas, garantizando una experiencia fluida en cualquier plataforma.",
-            "<strong>Mejoras de Interfaz:</strong> Se renombró el panel de ajustes a \"Personalizar Página\" y se ha mejorado la legibilidad de todos los textos sobre fondos de piedra para que no se pierda ningún detalle de los pactos.",
-            "<strong>¡Sección de Colaboradores!</strong> Un nuevo espacio para agradecer a quienes ayudan a que el Grimorio crezca y mejore.",
-            "<strong>Corrección General de Errores:</strong> Se han solucionado múltiples errores internos para hacer la navegación más estable y se ha mejorado la animación de aparición de las cartas.",
-            "La versión anterior v3.3 ha sido consolidada en esta beta pública."
-        ]
+            "<strong>¡Optimización Crítica de Rendimiento!</strong> Se ha rediseñado el efecto de aura para que sea interactivo. Ahora solo se activa al pasar el cursor sobre una carta revelada, eliminando por completo el lag y los problemas de scroll cuando todas las cartas estaban visibles.",
+            "<strong>Mayor Estabilidad:</strong> Se han añadido medidas de seguridad al código para prevenir que la página se rompa si algún elemento no carga correctamente. Los errores ahora son gestionados de forma más inteligente.",
+            "<strong>Herramienta de Depuración:</strong> Para facilitar la solución de futuros problemas, se ha añadido un botón en los ajustes ('Copiar Info. de Debug') que recoge datos técnicos sobre la sesión para poder reportar errores con precisión.",
+            "<strong>Pulido Visual Final:</strong> Se eliminaron las últimas líneas de borde residuales en la vista de carta detallada, logrando un aspecto limpio y profesional.",
+            "<strong>Actualización General:</strong> Esta versión también incluye todas las mejoras anteriores (corrección de sonidos, contador de cartas, etc.) para crear la experiencia más estable hasta la fecha."
+        ],
+        "ai_note": "(Registro de cambios mejorado por IA para mayor claridad)"
     },
     "ui_text": {
-        "identify_prompt": "Identificar"
+        "identify_prompt": "Identificar",
+        "dynamic_subtitles": [
+            "Cada 50 muertes 3 cartas se revelan.", "Solo 5 pactos...", "Una carta más a la colección.", "Esta decisión me consumió la vida.", "Un mapache hurgó en mi bolso.", "La muerte te sonríe...", "Las campanas de la muerte cantan.", "Sonidos esqueléticos...", "Un día más, otra muerte más.", "Ya no debería seguir muriendo.", "¿Otra vez aquí?", "¿Cuántas he visto ya?", "Necesitaba esto, gracias por tu arma.", "Ya van 133 muertes...", "¡Una más! ¡Ya casi!"
+        ]
+    },
+    "legal_text": {
+        "title": "Aviso Legal y de Privacidad",
+        "content": "<h3>Propósito de la Página</h3><p>Esta página es un recurso no oficial, creado por fans para la comunidad del juego 'Wasteland Story RPG'. Su único propósito es servir como un álbum o grimorio visual de las cartas (pactos) disponibles en el juego, facilitando su consulta.</p><h3>Recopilación de Datos</h3><p>Esta web <strong>NO</strong> recopila información personal identificable de sus usuarios. Las únicas 'cookies' o datos guardados localmente en tu navegador son para recordar tus preferencias de personalización (color, reverso de carta, volumen) y las cartas que ya has 'revelado'. No se envía ninguna información personal a ningún servidor.</p><p>La página utiliza un contador de visitas anónimo (CounterAPI) que no rastrea información personal. Para ayudar a solucionar errores, la página puede capturar datos de fallos técnicos de forma anónima, que puedes enviar voluntariamente a través del botón de depuración en los ajustes.</p><h3>Asociación</h3><p>Esta página <strong>NO</strong> está afiliada, asociada, autorizada, respaldada por, ni de ninguna manera oficialmente conectada con Lunarite Studio, el desarrollador de Wasteland Story RPG.</p><p><em>Todo el contenido, las funcionalidades y los textos de esta página están sujetos a cambios sin previo aviso.</em></p>"
     }
 }

@@ -2,9 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALbum de la Muerte</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Album de Cartas</title>
     
+    <link rel="icon" href="assets/Icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
@@ -27,31 +28,33 @@
     </div>
     
     <header class="main-header">
-        <button id="collab-btn" class="corner-btn" aria-label="Abrir panel de colaboradores">★</button>
-        <div id="collab-panel" class="collab-panel">
-            <!-- Contenido generado por JS -->
-        </div>
-
         <button id="settings-toggle-btn" class="corner-btn" aria-label="Abrir panel de ajustes">⚙️</button>
         <div id="settings-panel" class="settings-panel">
             <h4>Personalizar Página</h4>
             
             <div class="setting-option">
-                <label for="theme-color-selector">Color de Textos</label>
+                <label>Color de Textos</label>
                 <div id="theme-color-selector" class="color-selector">
-                    <div class="color-swatch" data-color="#dcbaff" style="background-color: #dcbaff;" title="Arcano (Original)" role="button" aria-label="Seleccionar color Magico"></div>
-                    <div class="color-swatch" data-color="#a0e9ff" style="background-color: #a0e9ff;" title="Espectral" role="button" aria-label="Seleccionar color Fantasma"></div>
-                    <div class="color-swatch" data-color="#ff9b85" style="background-color: #ff9b85;" title="Demoníaco" role="button" aria-label="Seleccionar color Demoníaco"></div>
-                    <div class="color-swatch" data-color="#b4ffad" style="background-color: #b4ffad;" title="Profano" role="button" aria-label="Seleccionar color Natural"></div>
+                    <div class="color-swatch" data-color="#dcbaff" style="background-color: #dcbaff;" title="Morado (predeterminado)"></div>
+                    <div class="color-swatch" data-color="#a0e9ff" style="background-color: #a0e9ff;" title="Celeste"></div>
+                    <div class="color-swatch" data-color="#ff9b85" style="background-color: #ff9b85;" title="Rojo"></div>
+                    <div class="color-swatch" data-color="#b4ffad" style="background-color: #b4ffad;" title="Verde"></div>
                 </div>
             </div>
             <div class="setting-option">
                 <label>Reverso de las Cartas</label>
                 <div id="card-back-selector" class="card-back-selector">
-                    <div class="card-back-option default-back" data-back="default" title="Aleatorio" role="button" aria-label="Seleccionar reverso aleatorio">A</div>
-                    <img src="assets/card_back/card_back.webp" class="card-back-option" data-back="assets/card_back/card_back.webp" alt="Seleccionar reverso de carta 1" role="button">
-                    <img src="assets/card_back/card_back2.webp" class="card-back-option" data-back="assets/card_back/card_back2.webp" alt="Seleccionar reverso de carta 2" role="button">
-                    <img src="assets/card_back/card_back3.webp" class="card-back-option" data-back="assets/card_back/card_back3.webp" alt="Seleccionar reverso de carta 3" role="button">
+                    <div class="card-back-option default-back" data-back="default" title="Patrón">A</div>
+                    <img src="assets/card_back/card_back.webp" class="card-back-option" data-back="assets/card_back/card_back.webp" alt="Reverso 1">
+                    <img src="assets/card_back/card_back2.webp" class="card-back-option" data-back="assets/card_back/card_back2.webp" alt="Reverso 2">
+                    <img src="assets/card_back/card_back3.webp" class="card-back-option" data-back="assets/card_back/card_back3.webp" alt="Reverso 3">
+                </div>
+            </div>
+            <div class="setting-option">
+                <label>Efecto de Aura Interactivo</label>
+                <div class="setting-toggle">
+                    <label><input type="radio" name="aura-effect" value="alfa" checked> Resplandor</label>
+                    <label><input type="radio" name="aura-effect" value="beta"> Sutil</label>
                 </div>
             </div>
 
@@ -60,9 +63,9 @@
             <h4>Audio</h4>
             <div class="setting-option">
                 <label for="master-volume-slider">Volumen General</label>
-                <input type="range" id="master-volume-slider" min="0" max="1" step="0.05" aria-label="Control de volumen general">
+                <input type="range" id="master-volume-slider" min="0" max="1" step="0.05">
             </div>
-            <div class="setting-option">
+             <div class="setting-option">
                 <label>Silenciar Sonidos</label>
                 <div id="sound-mute-toggles" class="sound-mute-toggles">
                     <label><input type="checkbox" data-sound="deal"> Repartir</label>
@@ -75,20 +78,26 @@
             
             <hr class="settings-divider">
 
-            <h4>Datos</h4>
-            <div class="setting-option data-actions">
-                <button id="clear-seen-btn" class="settings-btn caution-btn">Borrar Cartas Reveladas</button>
-                <button id="reset-settings-btn" class="settings-btn danger-btn">Resetear Pagina</button>
+            <h4>Datos y Acciones</h4>
+            <div class="data-actions">
+                <button id="reveal-all-btn" class="settings-btn">Revelar Todas</button>
+                <button id="clear-seen-btn" class="settings-btn caution-btn">Borrar Reveladas</button>
+            </div>
+            <div class="data-actions">
+                 <button id="legal-notice-btn" class="settings-btn">Aviso Legal</button>
+                 <button id="debug-copy-btn" class="settings-btn">Copiar Info. de Debug</button>
+            </div>
+             <div class="data-actions">
+                <button id="reset-settings-btn" class="settings-btn danger-btn">Resetear Página</button>
             </div>
         </div>
         
-        <button id="changelog-btn" class="corner-btn" aria-label="Abrir registro de cambios">LOG</button>
+        <button id="changelog-btn" class="corner-btn">LOG</button>
     </header>
     
     <main class="main-content">
-        <h1>Album de la Muerte</h1>
-        <h2>Cada carta es un pacto. Elige tu destino sabiamente.</h2>
-        <p class="author-credit">Página por: RazerX</p>
+        <h1>Album de Cartas</h1>
+        <h2 id="dynamic-subtitle">Cada carta es un pacto. Elige tu destino sabiamente.</h2>
         
         <a id="discord-link" href="https://discord.gg/5XZVTKF7Hj" target="_blank" rel="noopener noreferrer" class="discord-community">
             <h3>Únete a Nuestra Comunidad</h3>
@@ -96,7 +105,8 @@
         </a>
         
         <div class="controls-container">
-             <input type="search" id="search-box" placeholder="Buscar un pacto por su nombre..." disabled>
+             <input type="search" id="search-box" placeholder="Buscar un pactos..." disabled>
+             <p id="card-counter" class="card-counter"></p>
         </div>
 
         <div id="initial-deck-container" class="initial-deck-container">
@@ -108,9 +118,8 @@
         </div>
         
         <div class="card-gallery" id="card-gallery" aria-live="polite"></div>
-        <p id="no-results-message" class="hidden" role="status">No se encontraron pactos con ese nombre.</p>
+        <p id="no-results-message" class="hidden" role="status">No se encontraron pactos...</p>
 
-        <!-- Contador de Visitas -->
         <div id="visitor-counter" class="visitor-counter">
             <button id="visitor-counter-toggle" title="Mostrar/Ocultar contador">👁️</button>
             <span>Visitas: <strong id="visitor-count">...</strong></span>
@@ -118,15 +127,13 @@
     </main>
 
     <div class="modal-overlay" id="modal-overlay"></div>
-
-    <div class="modal-content" id="changelog-modal" role="dialog" aria-modal="true" aria-labelledby="changelog-title">
-        <!-- Contenido generado por JS -->
-    </div>
     
-    <div class="modal-content card-view-modal" id="card-view-modal" role="dialog" aria-modal="true" aria-labelledby="card-view-title">
-        <button class="corner-btn close-modal-btn" aria-label="Cerrar vista de carta">X</button>
+    <div class="modal" id="changelog-modal" role="dialog" aria-modal="true"></div>
+    <div class="modal" id="legal-modal" role="dialog" aria-modal="true"></div>
+
+    <div class="modal card-view-modal" id="card-view-modal" role="dialog" aria-modal="true">
+        <button class="close-modal-btn" aria-label="Cerrar vista de carta">X</button>
         <button class="card-nav-btn" id="prev-card-btn" aria-label="Carta anterior">&lt;</button>
-        
         <div class="card-view-content">
             <div class="card-view-image-container">
                 <img id="card-view-image" src="assets/noise.webp" alt="Imagen de la carta">
@@ -136,7 +143,6 @@
                 <div id="card-view-description"></div>
             </div>
         </div>
-
         <button class="card-nav-btn" id="next-card-btn" aria-label="Siguiente carta">&gt;</button>
     </div>
 
