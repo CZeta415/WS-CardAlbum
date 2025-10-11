@@ -51,7 +51,7 @@
         ],
         "comment_categories": [
             { "name": "Anuncios", "categoryId": "DIC_kwDOPrKawc4Cwfmi", "icon": "📣", "description": "Novedades y anuncios oficiales." },
-            { "name": "General", "categoryId": "DIC_kwDOPrKawc4Cwfmj", "icon": "💬", "description": "Discusiones generales sobre el juego." },
+            { "name": "Generals", "categoryId": "DIC_kwDOPrKawc4Cwfmj", "icon": "💬", "description": "Discusiones generales sobre el juego." },
             { "name": "Ideas", "categoryId": "DIC_kwDOPrKawc4Cwfmk", "icon": "💡", "description": "Sugiere nuevas funciones o mejoras." },
             { "name": "Ayuda y Más", "categoryId": "DIC_kwDOPrKawc4Cwfmq", "icon": "🙏", "description": "Pide ayuda o comparte tus dudas." },
             { "name": "Reglas", "categoryId": "DIC_kwDOPrKawc4Cwfms", "icon": "👁️", "description": "Consulta y discute las reglas." },
