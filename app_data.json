@@ -50,12 +50,12 @@
             "Cada 50 muertes 3 cartas se revelan.", "Solo 5 pactos...", "Una carta más a la colección.", "Esta decisión me consumió la vida.", "Un mapache hurgó en mi bolso.", "La muerte te sonríe...", "Las campanas de la muerte cantan.", "Sonidos esqueléticos...", "Un día más, otra muerte más.", "Ya no debería seguir muriendo.", "¿Otra vez aquí?", "¿Cuántas he visto ya?", "Necesitaba esto, gracias por tu arma.", "Ya van 133 muertes...", "¡Una más! ¡Ya casi!"
         ],
         "comment_categories": [
-            { "name": "Anuncios", "icon": "📣", "description": "Novedades y anuncios oficiales." },
-            { "name": "General", "icon": "💬", "description": "Discusiones generales sobre el juego." },
-            { "name": "Ideas", "icon": "💡", "description": "Sugiere nuevas funciones o mejoras." },
-            { "name": "Ayuda y Más", "icon": "🙏", "description": "Pide ayuda o comparte tus dudas." },
-            { "name": "Reglas", "icon": "👁️", "description": "Consulta y discute las reglas." },
-            { "name": "Votaciones", "icon": "🗳️", "description": "Participa en encuestas de la comunidad." }
+            { "name": "Anuncios", "categoryId": "DIC_kwDOPrKawc4Cwfmi", "icon": "📣", "description": "Novedades y anuncios oficiales." },
+            { "name": "General", "categoryId": "DIC_kwDOPrKawc4Cwfmj", "icon": "💬", "description": "Discusiones generales sobre el juego." },
+            { "name": "Ideas", "categoryId": "DIC_kwDOPrKawc4Cwfmk", "icon": "💡", "description": "Sugiere nuevas funciones o mejoras." },
+            { "name": "Ayuda y Más", "categoryId": "DIC_kwDOPrKawc4Cwfmq", "icon": "🙏", "description": "Pide ayuda o comparte tus dudas." },
+            { "name": "Reglas", "categoryId": "DIC_kwDOPrKawc4Cwfms", "icon": "👁️", "description": "Consulta y discute las reglas." },
+            { "name": "Votaciones", "categoryId": "DIC_kwDOPrKawc4Cwfmv", "icon": "🗳️", "description": "Participa en encuestas de la comunidad." }
         ]
     },
     "legal_text": {
