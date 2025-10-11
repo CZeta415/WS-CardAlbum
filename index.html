@@ -28,6 +28,7 @@
     </div>
     
     <header class="main-header">
+        <button id="comments-toggle-btn" class="corner-btn" title="Mostrar Comentarios">💬</button>
         <button id="settings-toggle-btn" class="corner-btn" aria-label="Abrir panel de ajustes">⚙️</button>
         <div id="settings-panel" class="settings-panel">
             <h4>Personalizar Página</h4>
@@ -84,7 +85,7 @@
                 <button id="clear-seen-btn" class="settings-btn caution-btn">Borrar Reveladas</button>
             </div>
             <div class="data-actions">
-                 <button id="legal-notice-btn" class="settings-btn">Aviso Legal</button>
+                 <button id="legal-notice-btn" class="settings-btn">Pautas</button>
                  <button id="debug-copy-btn" class="settings-btn">Copiar Info. de Debug</button>
             </div>
              <div class="data-actions">
@@ -104,15 +105,8 @@
             <img src="assets/discord.png" alt="Logo de Discord">
         </a>
         
-        <section id="comments-section" class="comments-section">
-            <button id="comments-toggle-btn" class="comments-toggle-btn">💬 Mostrar Comentarios</button>
-            <div id="utterances-container" class="utterances-container hidden">
-                <!-- Los comentarios se cargarán aquí -->
-            </div>
-        </section>
-        
         <div class="controls-container">
-             <input type="search" id="search-box" placeholder="Buscar un pactos..." disabled>
+             <input type="search" id="search-box" placeholder="Buscar un pacto..." disabled>
              <p id="card-counter" class="card-counter"></p>
         </div>
 
@@ -127,11 +121,18 @@
         <div class="card-gallery" id="card-gallery" aria-live="polite"></div>
         <p id="no-results-message" class="hidden" role="status">No se encontraron pactos...</p>
 
-        <div id="visitor-counter" class="visitor-counter">
-            <button id="visitor-counter-toggle" title="Mostrar/Ocultar contador">👁️</button>
-            <span>Visitas: <strong id="visitor-count">...</strong></span>
-        </div>
     </main>
+    
+    <section id="comments-section" class="comments-section hidden">
+        <div id="utterances-container">
+             <!-- Los comentarios se cargarán aquí -->
+        </div>
+    </section>
+
+    <div id="visitor-counter" class="visitor-counter">
+        <button id="visitor-counter-toggle" title="Mostrar/Ocultar contador">👁️</button>
+        <span>Visitas: <strong id="visitor-count">...</strong></span>
+    </div>
 
     <div class="modal-overlay" id="modal-overlay"></div>
     

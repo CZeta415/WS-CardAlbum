@@ -10,95 +10,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const dynamicSubtitle = document.getElementById("dynamic-subtitle");
     const cardCounterElement = document.getElementById("card-counter");
     const commentsToggleBtn = document.getElementById("comments-toggle-btn");
+    const commentsSection = document.getElementById("comments-section");
     const utterancesContainer = document.getElementById("utterances-container");
-
-    // Popups and Modals
-    const settingsToggleBtn = document.getElementById("settings-toggle-btn");
-    const settingsPanel = document.getElementById("settings-panel");
-    const changelogBtn = document.getElementById("changelog-btn");
-    const modalOverlay = document.getElementById("modal-overlay");
-    const changelogModal = document.getElementById("changelog-modal");
-    const cardViewModal = document.getElementById("card-view-modal");
-    const legalModal = document.getElementById("legal-modal");
     
-    // Global state
-    let appData = {};
-    let fuse;
-    let visibleCards = [];
-    let currentCardIndex = -1;
-    let pactOfTheDayId = -1;
-    let activeModal = null;
-    let caughtErrors = [];
+    // ... (El resto de las variables y la configuración de Audio y Settings no cambia)
     let isUtterancesLoaded = false;
+    let appData = {};
 
-    // Audio
-    let audioContext;
-    const audioBuffers = {};
-    const audioSources = {
-        deal: "assets/sounds/CardRep.mp3",
-        flip: "assets/sounds/Flip.mp3",
-        roll: "assets/sounds/CardRolls.mp3",
-        logS: "assets/sounds/LogS.mp3",
-        button: "assets/sounds/button.mp3",
-    };
-    
-    let settings = {
-        themeColor: "#dcbaff",
-        cardBack: "default",
-        auraEffect: "alfa",
-        masterVolume: 0.7,
-        mutedSounds: [],
-        seenCards: [],
-        legalAccepted: false
-    };
-
-    // --- INITIALIZATION ---
-    async function init() {
-        try {
-            const response = await fetch("app_data.json");
-            if (!response.ok) throw new Error("Could not load app_data.json");
-            appData = await response.json();
-            
-            preloadAssets();
-            activationText.textContent = "Listo para el pacto.";
-            activationOverlay.addEventListener("click", activateApp, { once: true });
-        } catch (error) {
-            caughtErrors.push({ source: "init", message: error.message, stack: error.stack });
-            activationText.textContent = "Error crítico al cargar datos. Refresca la página.";
-            console.error(error);
-        }
+    // --- CORRECCIÓN CRÍTICA en applySettings ---
+    function applySettings() {
+        // ... (resto de applySettings)
+        
+        // CORRECCIÓN: Usamos classList para no sobreescribir otras clases como "no-scroll"
+        document.body.classList.remove("aura-effect-alfa", "aura-effect-beta");
+        document.body.classList.add(`aura-effect-${settings.auraEffect}`);
     }
 
-    async function activateApp() {
-        try {
-            activationOverlay.classList.add("hidden");
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            await loadAudio();
-            loadSettings();
-            applySettings();
-            calculatePactOfTheDay();
-            setupEventListeners();
-            initializeFuseSearch();
-            setupVisitorCounter();
-            startSubtitleRotator();
-            updateCardCounter();
-            document.body.classList.remove("no-scroll");
-
-            if (!settings.legalAccepted) {
-                setTimeout(showLegalModal, 500);
-            }
-        } catch (error) {
-            caughtErrors.push({ source: "activateApp", message: error.message, stack: error.stack });
-            console.error("Error during app activation:", error);
-        }
-    }
-    // ... (El resto de funciones como preloadAssets, calculatePactOfTheDay, dealCards, etc. no cambian y se mantienen igual)...
-    // Asegúrate de pegar esto en el archivo JS que ya tienes o de copiar todas las funciones de los mensajes anteriores.
-    // La parte clave que cambia es la que viene a continuación:
-    
     // --- LÓGICA DE UTTERANCES (COMENTARIOS) ---
     function loadUtterances() {
-        if (isUtterancesLoaded || !utterancesContainer) return; // Se asegura de que cargue solo una vez
+        if (isUtterancesLoaded || !utterancesContainer) return;
         isUtterancesLoaded = true;
 
         const script = document.createElement("script");
@@ -114,55 +44,54 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // --- EVENT LISTENERS SETUP ---
     function setupEventListeners() {
-        // ... (Todos los event listeners de antes para los botones de la página, modales, etc.)
+        if (initialDeck) initialDeck.addEventListener("click", dealCards, { once: true });
+        if (searchBox) searchBox.addEventListener("input", handleSearch);
+        
+        if (cardGallery) cardGallery.addEventListener("click", e => {
+            const cardElement = e.target.closest(".card-container");
+            if (cardElement) handleCardClick(cardElement);
+        });
+
+        // Event listener para cerrar popups y modales
+        document.addEventListener("click", e => {
+            if (settingsPanel && settingsToggleBtn && !settingsPanel.contains(e.target) && !settingsToggleBtn.contains(e.target)) {
+                settingsPanel.classList.remove("visible");
+            }
+            if (e.target.closest(".close-modal-btn")) {
+                closeModal();
+            }
+        });
 
         if (commentsToggleBtn) {
-            commentsToggleBtn.addEventListener("click", () => {
+            commentsToggleBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
                 playSound("button");
-                const isHidden = utterancesContainer.classList.toggle("hidden");
-                if (!isHidden) {
-                    commentsToggleBtn.textContent = "📫 Ocultar Comentarios";
-                    loadUtterances(); // Llama a la función para cargar el script
-                } else {
-                    commentsToggleBtn.textContent = "💬 Mostrar Comentarios";
+                const isVisible = commentsSection.classList.toggle("visible");
+                if (isVisible) {
+                    loadUtterances();
                 }
             });
         }
-        // ... (resto de tus event listeners del panel de ajustes, etc.)
+        
+        // ... (El resto de todos los event listeners de los mensajes anteriores sin cambios)
     }
 
-    init();
-
-    // ---- NOTA: A CONTINUACIÓN VA EL RESTO DEL CÓDIGO JS QUE NO CAMBIÓ ----
-    // (Asegúrate de que estas funciones también están en tu archivo)
-
-    async function preloadAssets() { /* ...código de mensajes anteriores... */ }
-    function calculatePactOfTheDay() { /* ...código de mensajes anteriores... */ }
-    function dealCards() { /* ...código de mensajes anteriores... */ }
-    function displayCards(cards) { /* ...código de mensajes anteriores... */ }
-    function createCardElement(card, index) { /* ...código de mensajes anteriores... */ }
-    function handleCardClick(cardEl) { /* ...código de mensajes anteriores... */ }
-    function updateCardCounter() { /* ...código de mensajes anteriores... */ }
-    function initializeFuseSearch() { /* ...código de mensajes anteriores... */ }
-    function handleSearch() { /* ...código de mensajes anteriores... */ }
-    function openModal(modal) { /* ...código de mensajes anteriores... */ }
-    function closeModal() { /* ...código de mensajes anteriores... */ }
-    function closeAllPopups() { /* ...código de mensajes anteriores... */ }
-    function showChangelog() { /* ...código de mensajes anteriores... */ }
-    function showLegalModal() { /* ...código de mensajes anteriores... */ }
-    function openCardViewModal(cardId) { /* ...código de mensajes anteriores... */ }
-    function updateCardViewModal() { /* ...código de mensajes anteriores... */ }
-    function navigateCard(direction) { /* ...código de mensajes anteriores... */ }
-    function loadSettings() { /* ...código de mensajes anteriores... */ }
-    function saveSettings() { /* ...código de mensajes anteriores... */ }
-    function applySettings() { /* ...código de mensajes anteriores... */ }
-    function resetSettings() { /* ...código de mensajes anteriores... */ }
-    function clearSeenCards() { /* ...código de mensajes anteriores... */ }
-    function revealAllCards() { /* ...código de mensajes anteriores... */ }
-    function copyDebugInfo() { /* ...código de mensajes anteriores... */ }
-    async function setupVisitorCounter() { /* ...código de mensajes anteriores... */ }
-    function startSubtitleRotator() { /* ...código de mensajes anteriores... */ }
-    function getCardBackUrl(index) { /* ...código de mensajes anteriores... */ }
-    async function loadAudio() { /* ...código de mensajes anteriores... */ }
-    function playSound(name) { /* ...código de mensajes anteriores... */ }
+    // --- ACTIVATE APP (Asegurarse de que el scroll se active) ---
+    async function activateApp() {
+        try {
+            activationOverlay.classList.add("hidden");
+            document.body.classList.remove("no-scroll"); // <- Línea clave
+            
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            await loadAudio();
+            
+            // ... (el resto de activateApp no cambia)
+        } catch (error) {
+             // ...
+        }
+    }
+    
+    // Asegúrate de incluir el resto del código JS de los mensajes anteriores
+    // como init(), preloadAssets(), playSound(), etc., ya que no han cambiado.
+    init(); 
 });
