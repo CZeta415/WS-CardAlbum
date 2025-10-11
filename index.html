@@ -1,109 +1,141 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Album de Cartas</title>
-    
-    <link rel="icon" href="assets/Icon.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Álbum de Cartas</title>
+
+  <link rel="icon" href="assets/Icon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+  <script src="script.js" defer></script>
 </head>
+
 <body class="no-scroll">
-
-    <div id="ambient-background" aria-hidden="true"></div>
-
-    <div id="activation-overlay" role="button" tabindex="0" aria-label="Activar aplicación y sonido">
-        <div class="activation-content">
-            <h1>Album De Cartas</h1>
-            <h2 id="activation-text">Cargando pactos...</h2>
-            <p>(El sonido se activará al hacer click)</p>
-        </div>
+  <!-- Pantalla inicial -->
+  <div id="activation-overlay">
+    <div class="activation-content">
+      <h1>Álbum de Cartas</h1>
+      <h2 id="activation-text">Cargando pactos...</h2>
+      <p>(Haz clic para activar sonido y continuar)</p>
     </div>
-    
-    <header class="main-header">
-        <button id="comments-toggle-btn" class="corner-btn" title="Comentarios y Discusiones">💬</button>
-        <button id="settings-toggle-btn" class="corner-btn" aria-label="Abrir panel de ajustes" aria-controls="settings-panel" aria-expanded="false">⚙️</button>
-        <div id="settings-panel" class="settings-panel" role="region" aria-labelledby="settings-toggle-btn">
-            <h4>Personalizar Página</h4>
-            
-            <div class="setting-option"><label>Color de Textos</label><div id="theme-color-selector" class="color-selector"><div class="color-swatch" data-color="#dcbaff" style="background-color: #dcbaff;" title="Morado (predeterminado)"></div><div class="color-swatch" data-color="#a0e9ff" style="background-color: #a0e9ff;" title="Celeste"></div><div class="color-swatch" data-color="#ff9b85" style="background-color: #ff9b85;" title="Rojo"></div><div class="color-swatch" data-color="#b4ffad" style="background-color: #b4ffad;" title="Verde"></div></div></div>
-            <div class="setting-option"><label>Reverso de las Cartas</label><div id="card-back-selector" class="card-back-selector"><div class="card-back-option default-back" data-back="default" title="Patrón">A</div><img src="assets/card_back/card_back.webp" class="card-back-option" data-back="assets/card_back/card_back.webp" alt="Reverso 1"><img src="assets/card_back/card_back2.webp" class="card-back-option" data-back="assets/card_back/card_back2.webp" alt="Reverso 2"><img src="assets/card_back/card_back3.webp" class="card-back-option" data-back="assets/card_back/card_back3.webp" alt="Reverso 3"></div></div>
-            <div class="setting-option"><label>Efecto de Aura Interactivo</label><div class="setting-toggle"><label><input type="radio" name="aura-effect" value="alfa" checked> Resplandor</label><label><input type="radio" name="aura-effect" value="beta"> Sutil</label></div></div>
-            <hr class="settings-divider">
-            <h4>Audio</h4>
-            <div class="setting-option"><label for="master-volume-slider">Volumen General</label><input type="range" id="master-volume-slider" min="0" max="1" step="0.05"></div>
-            <div class="setting-option"><label>Silenciar Sonidos</label><div id="sound-mute-toggles" class="sound-mute-toggles"><label><input type="checkbox" data-sound="deal"> Repartir</label><label><input type="checkbox" data-sound="flip"> Girar</label><label><input type="checkbox" data-sound="roll"> Navegar</label><label><input type="checkbox" data-sound="logS"> Log</label><label><input type="checkbox" data-sound="button"> Botones</label></div></div>
-            <hr class="settings-divider">
-            <h4>Datos y Acciones</h4>
-            <div class="data-actions"><button id="reveal-all-btn" class="settings-btn">Revelar Todas</button><button id="clear-seen-btn" class="settings-btn caution-btn">Borrar Reveladas</button></div>
-            <div class="data-actions"><button id="legal-notice-btn" class="settings-btn">Pautas</button><button id="debug-copy-btn" class="settings-btn">Copiar Info. de Debug</button></div>
-            <div class="data-actions"><button id="reset-settings-btn" class="settings-btn danger-btn">Resetear Página</button></div>
-        </div>
-        <button id="changelog-btn" class="corner-btn">Novedades</button>
-    </header>
-    
-    <main class="main-content">
-        <h1>Album de Cartas</h1>
-        <h2 id="dynamic-subtitle">Cada carta es un pacto. Elige tu destino sabiamente.</h2>
-        
-        <a id="discord-link" href="https://discord.gg/5XZVTKF7Hj" target="_blank" rel="noopener noreferrer" class="discord-community">
-            <h3>Únete a Nuestra Comunidad</h3>
-            <img src="assets/discord.png" alt="Logo de Discord">
-        </a>
-        
-        <div class="controls-container">
-             <div class="search-wrapper">
-                <input type="search" id="search-box" placeholder="Buscar un pacto..." disabled>
-                <button id="clear-search-btn" class="clear-search-btn" aria-label="Limpiar búsqueda" style="display: none;">×</button>
-             </div>
-             <p id="card-counter" class="card-counter"></p>
-        </div>
+  </div>
 
-        <div id="initial-deck-container" class="initial-deck-container">
-            <div id="initial-deck" class="card-stack" role="button" tabindex="0" aria-label="Revelar las cartas">
-                <div class="card-face" style="background-image: url('assets/card_back/card_back.webp');"></div>
-                <div class="card-face" style="background-image: url('assets/card_back/card_back2.webp');"></div>
-                <div class="card-face" style="background-image: url('assets/card_back/card_back3.webp');"></div>
-            </div>
+  <!-- Encabezado -->
+  <header class="main-header">
+    <button id="comments-toggle-btn" class="corner-btn" title="Comentarios">💬</button>
+    <button id="settings-toggle-btn" class="corner-btn" aria-label="Abrir ajustes" aria-controls="settings-panel" aria-expanded="false">⚙️</button>
+    <div id="settings-panel" class="settings-panel" role="region" aria-labelledby="settings-toggle-btn">
+      <h4>Personalizar Página</h4>
+
+      <div class="setting-option"><label>Color de Textos</label>
+        <div id="theme-color-selector" class="color-selector">
+          <div class="color-swatch" data-color="#dcbaff" style="background-color:#dcbaff;"></div>
+          <div class="color-swatch" data-color="#a0e9ff" style="background-color:#a0e9ff;"></div>
+          <div class="color-swatch" data-color="#ff9b85" style="background-color:#ff9b85;"></div>
+          <div class="color-swatch" data-color="#b4ffad" style="background-color:#b4ffad;"></div>
         </div>
-        
-        <div class="card-gallery" id="card-gallery" aria-live="polite"></div>
-        <p id="no-results-message" class="hidden" role="status">No se encontraron pactos...</p>
-    </main>
-    
-    <div id="visitor-counter" class="visitor-counter">
-        <button id="visitor-counter-toggle" title="Mostrar/Ocultar contador">👁️</button>
-        <span>Visitas: <strong id="visitor-count">...</strong></span>
+      </div>
+
+      <div class="setting-option"><label>Reverso de las Cartas</label>
+        <div id="card-back-selector" class="card-back-selector">
+          <div class="card-back-option default-back" data-back="default">A</div>
+          <img src="assets/card_back/card_back.webp" class="card-back-option" data-back="assets/card_back/card_back.webp" alt="Reverso 1">
+          <img src="assets/card_back/card_back2.webp" class="card-back-option" data-back="assets/card_back/card_back2.webp" alt="Reverso 2">
+          <img src="assets/card_back/card_back3.webp" class="card-back-option" data-back="assets/card_back/card_back3.webp" alt="Reverso 3">
+        </div>
+      </div>
+
+      <div class="setting-option"><label>Efecto de Aura</label>
+        <div class="setting-toggle">
+          <label><input type="radio" name="aura-effect" value="alfa" checked> Resplandor</label>
+          <label><input type="radio" name="aura-effect" value="beta"> Sutil</label>
+        </div>
+      </div>
+
+      <hr class="settings-divider">
+      <h4>Audio</h4>
+      <div class="setting-option"><label for="master-volume-slider">Volumen General</label>
+        <input type="range" id="master-volume-slider" min="0" max="1" step="0.05">
+      </div>
+      <div class="setting-option"><label>Silenciar Sonidos</label>
+        <div id="sound-mute-toggles" class="sound-mute-toggles">
+          <label><input type="checkbox" data-sound="deal"> Repartir</label>
+          <label><input type="checkbox" data-sound="flip"> Girar</label>
+          <label><input type="checkbox" data-sound="roll"> Navegar</label>
+          <label><input type="checkbox" data-sound="logS"> Log</label>
+          <label><input type="checkbox" data-sound="button"> Botones</label>
+        </div>
+      </div>
+
+      <hr class="settings-divider">
+      <h4>Datos y Acciones</h4>
+      <div class="data-actions">
+        <button id="reveal-all-btn" class="settings-btn">Revelar Todas</button>
+        <button id="clear-seen-btn" class="settings-btn caution-btn">Borrar Reveladas</button>
+      </div>
+      <div class="data-actions">
+        <button id="legal-notice-btn" class="settings-btn">Pautas</button>
+        <button id="debug-copy-btn" class="settings-btn">Copiar Debug</button>
+      </div>
+      <div class="data-actions">
+        <button id="reset-settings-btn" class="settings-btn danger-btn">Resetear Página</button>
+      </div>
     </div>
+    <button id="changelog-btn" class="corner-btn">Novedades</button>
+  </header>
 
-    <div class="modal-overlay" id="modal-overlay"></div>
-    
-    <div class="modal" id="changelog-modal" role="dialog" aria-modal="true" aria-labelledby="changelog-title"></div>
-    <div class="modal" id="legal-modal" role="dialog" aria-modal="true" aria-labelledby="legal-title"></div>
+  <!-- Contenido principal -->
+  <main class="main-content">
+    <h1>Álbum de Cartas</h1>
+    <h2 id="dynamic-subtitle">Cada carta es un pacto. Elige tu destino sabiamente.</h2>
 
-    <div class="modal large-modal" id="comments-modal" role="dialog" aria-modal="true" aria-labelledby="comments-title">
-        <button class="close-modal-btn" aria-label="Cerrar">X</button>
-        <div id="comments-content">
-            <h2 id="comments-title">Comentarios de la Comunidad</h2>
-            <p class="modal-subtitle">Selecciona una categoría para ver las discusiones.</p>
-            <div id="comment-categories-container"></div>
-            <div id="giscus-container" class="hidden"></div>
-        </div>
-    </div>
-
-    <div class="modal card-view-modal" id="card-view-modal" role="dialog" aria-modal="true">
-        <button class="close-modal-btn" aria-label="Cerrar vista de carta">X</button>
-        <button class="card-nav-btn" id="prev-card-btn" aria-label="Carta anterior">&lt;</button>
-        <div class="card-view-content"><div class="card-view-image-container"><img id="card-view-image" src="assets/noise.webp" alt="Imagen de la carta"></div><div class="card-view-details"><h2 id="card-view-title"></h2><div id="card-view-description"></div></div></div>
-        <button class="card-nav-btn" id="next-card-btn" aria-label="Siguiente carta">&gt;</button>
+    <div class="controls-container">
+      <div class="search-wrapper">
+        <input type="search" id="search-box" placeholder="Buscar un pacto..." disabled>
+        <button id="clear-search-btn" class="clear-search-btn" aria-label="Limpiar búsqueda">×</button>
+      </div>
+      <p id="card-counter" class="card-counter"></p>
     </div>
 
+    <div id="initial-deck-container" class="initial-deck-container">
+      <div id="initial-deck" class="card-stack" role="button" aria-label="Revelar las cartas">
+        <div class="card-face" style="background-image:url('assets/card_back/card_back.webp');"></div>
+        <div class="card-face" style="background-image:url('assets/card_back/card_back2.webp');"></div>
+        <div class="card-face" style="background-image:url('assets/card_back/card_back3.webp');"></div>
+      </div>
+    </div>
+
+    <div class="card-gallery" id="card-gallery"></div>
+    <p id="no-results-message" class="hidden">No se encontraron pactos...</p>
+  </main>
+
+  <div class="modal-overlay" id="modal-overlay"></div>
+
+  <div class="modal" id="changelog-modal"></div>
+  <div class="modal" id="legal-modal"></div>
+
+  <div class="modal large-modal" id="comments-modal">
+    <button class="close-modal-btn" aria-label="Cerrar">X</button>
+    <div id="comments-content">
+      <h2 id="comments-title">Comentarios de la Comunidad</h2>
+      <div id="giscus-container" class="hidden"></div>
+    </div>
+  </div>
+
+  <div class="modal card-view-modal" id="card-view-modal">
+    <button class="close-modal-btn" aria-label="Cerrar">X</button>
+    <div class="card-view-content">
+      <div class="card-view-image-container"><img id="card-view-image" src="assets/noise.webp" alt="Carta" /></div>
+      <div class="card-view-details">
+        <h2 id="card-view-title"></h2>
+        <div id="card-view-description"></div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

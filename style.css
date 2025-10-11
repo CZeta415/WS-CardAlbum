@@ -125,3 +125,10 @@ body.no-scroll{overflow:hidden}
 .visitor-counter.hidden span{display:none}
 #visitor-counter-toggle{background:none;border:none;cursor:pointer;padding:5px;margin-right:8px;font-size:1.2em}
 @media (max-width:768px){.main-content{padding-top:30px}.card-view-content{flex-direction:column;padding:50px 20px 20px;text-align:center}.card-view-details{text-align:center}#card-view-image{max-width:200px;height:auto}.modal{max-height:90vh}}
+/* Corrección del panel de ajustes */
+#settings-panel {
+  position: fixed !important;
+  top: 70px !important;
+  right: 20px !important;
+  z-index: 2000 !important;
+}
