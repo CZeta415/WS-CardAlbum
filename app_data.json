@@ -28,32 +28,38 @@
         { "id": 26, "title": "Golem", "description": "Los secretos de este pacto aún no han sido revelados." },
         { "id": 27, "title": "Vengador", "description": "Los secretos de este pacto aún no han sido revelados." },
         { "id": 28, "title": "Bruja", "description": "Duración del debuff -12%.<br>Duración del debuff en enemigos +25%.<br><strong class=\"nerf-text\">Tiempo de reutilización de habilidad +35%.</strong>" },
-        { "id": 29, "title": "El horror de Eldritch", "description": "Regeneración de salud +0.25%<br>10% de probabilidad de invocar un tentáculo al atacar.<br><strong class=\"nerf-text\">El tentáculo es hostil. Daño por fuego recibido +25%.</strong>" },
         { "id": 30, "title": "Traidor", "description": "Los secretos de este pacto aún no han sido revelados." },
         { "id": 31, "title": "El enfermo", "description": "Los secretos de este pacto aún no han sido revelados." },
-        { "id": 32, "title": "Verdugo", "description": "Inflige 10% más de daño a enemigos con menos de 33% de salud.<br><strong class=\"nerf-text\">Recibe daño verdadero equivalente a 12% de la salud total al matar a un enemigo.</strong>" },
         { "id": 33, "title": "Wendigo", "description": "Daño vampiro +5%, daño cuerpo a cuerpo recibido -10%<br><strong class=\"nerf-text\">y daño a distancia recibido +20%.</strong>" },
         { "id": 34, "title": "Monje Ciego", "description": "Tiempo de enfriamiento de habilidad -20%<br>Daño desarmado +40%<br>Daño de carga +7%<br><strong class=\"nerf-text\">Probabilidad de fallar +25%</strong>" }
     ],
     "changelog": {
-        "version": "Beta v3.7.A Pública",
+        "version": "Beta v3.8 - La Renovación Social",
         "changes": [
-            "<strong>Nueva Sección de Comentarios:</strong> ¡Ahora puedes dejar tus comentarios y sugerencias directamente en la página! Se ha añadido un nuevo botón (💬) en la cabecera para mostrar u ocultar la sección de comentarios, la cual se integra con tu cuenta de GitHub.",
-            "<strong>Optimización Crítica de Rendimiento:</strong> El efecto de 'aura' en las cartas ahora es interactivo (se activa al pasar el cursor), eliminando completamente el 'lag' y los problemas de 'scroll' cuando se revelaban muchas cartas a la vez.",
-            "<strong>Corrección General de Errores:</strong> Se solucionó un error crítico que impedía que los botones y las cartas fueran clickeables después de la carga. Toda la interactividad de la página ha sido restaurada y mejorada.",
-            "<strong>Herramientas de Soporte:</strong> Se ha añadido un botón en los ajustes ('Copiar Info. de Debug') que recoge datos técnicos para facilitar el reporte y la solución de errores en el futuro.",
-            "<strong>Mejoras de la Interfaz:</strong> La sección de comentarios ha sido ubicada de forma no intrusiva. Además, se han pulido los textos legales para mejorar su claridad."
+            "<strong>¡Nuevo Sistema de Comentarios por Categorías!:</strong> Se ha integrado un sistema de comentarios que utiliza las Discusiones de GitHub. Ahora puedes navegar y participar en conversaciones organizadas por categorías como 'Anuncios', 'Ideas', y 'Ayuda' para una comunidad más ordenada.",
+            "<strong>Interfaz de Usuario Rediseñada (UI/UX):</strong> Se ha mejorado la experiencia general. El botón 'LOG' ahora es 'Novedades', se añadió un botón para limpiar la búsqueda fácilmente y el acceso a los comentarios está en la cabecera, cargándose solo cuando es necesario para mantener la página rápida y despejada.",
+            "<strong>Corrección y Limpieza de Datos:</strong> Se ha revisado la base de datos de pactos para eliminar cartas duplicadas, asegurando que el contador y el álbum sean 100% precisos.",
+            "<strong>Pautas de la Comunidad Actualizadas:</strong> Los textos legales y las pautas se han reescrito para ser más claros, incluyendo detalles sobre el funcionamiento del nuevo sistema de comentarios públicos y por categorías.",
+            "<strong>Optimización y Estabilidad:</strong> Se han resuelto varios fallos de interactividad y se ha mejorado el rendimiento general del sitio para una experiencia más fluida y estable."
         ],
-        "ai_note": "(Registro de cambios mejorado por IA para mayor claridad)"
+        "ai_note": "(Registro de cambios mejorado y consolidado por IA para mayor claridad)"
     },
     "ui_text": {
         "identify_prompt": "Identificar",
         "dynamic_subtitles": [
             "Cada 50 muertes 3 cartas se revelan.", "Solo 5 pactos...", "Una carta más a la colección.", "Esta decisión me consumió la vida.", "Un mapache hurgó en mi bolso.", "La muerte te sonríe...", "Las campanas de la muerte cantan.", "Sonidos esqueléticos...", "Un día más, otra muerte más.", "Ya no debería seguir muriendo.", "¿Otra vez aquí?", "¿Cuántas he visto ya?", "Necesitaba esto, gracias por tu arma.", "Ya van 133 muertes...", "¡Una más! ¡Ya casi!"
+        ],
+        "comment_categories": [
+            { "name": "Anuncios", "icon": "📣", "description": "Novedades y anuncios oficiales." },
+            { "name": "General", "icon": "💬", "description": "Discusiones generales sobre el juego." },
+            { "name": "Ideas", "icon": "💡", "description": "Sugiere nuevas funciones o mejoras." },
+            { "name": "Ayuda y Más", "icon": "🙏", "description": "Pide ayuda o comparte tus dudas." },
+            { "name": "Reglas", "icon": "👁️", "description": "Consulta y discute las reglas." },
+            { "name": "Votaciones", "icon": "🗳️", "description": "Participa en encuestas de la comunidad." }
         ]
     },
     "legal_text": {
         "title": "Pautas de la Comunidad y Aviso Legal",
-        "content": "<h3>Propósito del Sitio</h3><p>Esta página es un recurso <strong>no oficial</strong>, creado por un fan para la comunidad del juego 'Wasteland Story RPG'. Su único fin es servir como un álbum visual de las cartas (pactos) disponibles en el juego para facilitar su consulta.</p><h3>Recopilación y Uso de Datos</h3><p>La privacidad es fundamental. Este sitio <strong>NO</strong> recopila, almacena ni comparte información personal identificable de sus usuarios. Los únicos datos que se guardan son en el almacenamiento local de tu navegador ('Local Storage') para recordar tus preferencias de personalización (tema de color, reverso de carta, etc.) y tu progreso de cartas reveladas. Estos datos nunca salen de tu dispositivo.</p><p>Se utiliza un contador de visitas anónimo (CounterAPI) que no rastrea información personal. Para ayudar a solucionar problemas técnicos, se ha implementado una herramienta de depuración opcional en los ajustes, que te permite copiar información anónima de la sesión para reportar un error voluntariamente.</p><h3>Sistema de Comentarios</h3><p>La sección de comentarios se gestiona a través de la plataforma 'utteranc.es', la cual utiliza los 'Issues' de GitHub. Para comentar, se requiere iniciar sesión con una cuenta de GitHub. Ten en cuenta que todos los comentarios son <strong>públicos</strong> y quedan registrados en el repositorio del proyecto en GitHub.</p><h3>Vínculos y Afiliación</h3><p>Este sitio <strong>NO</strong> está afiliado, asociado, autorizado ni respaldado de ninguna manera por Lunarite Studio, el desarrollador de 'Wasteland Story RPG'. Es un proyecto independiente y sin fines de lucro.</p><p><em>Tanto el contenido como las funcionalidades de esta página están sujetos a cambios sin previo aviso. ¡Disfruta de tu estancia en el yermo!</em></p>"
+        "content": "<h3>Propósito del Sitio</h3><p>Esta página es un recurso <strong>no oficial</strong>, creado por un fan para la comunidad del juego 'Wasteland Story RPG'. Su único fin es servir como un álbum visual de las cartas (pactos) disponibles en el juego para facilitar su consulta.</p><h3>Recopilación y Uso de Datos</h3><p>La privacidad es fundamental. Este sitio <strong>NO</strong> recopila, almacena ni comparte información personal identificable de sus usuarios. Los únicos datos que se guardan son en el almacenamiento local de tu navegador ('Local Storage') para recordar tus preferencias de personalización y tu progreso. Estos datos nunca salen de tu dispositivo.</p><p>Se utiliza un contador de visitas anónimo (CounterAPI) que no rastrea información personal. Para ayudar a solucionar problemas técnicos, se ha implementado una herramienta de depuración opcional en los ajustes.</p><h3>Sistema de Comentarios (giscus)</h3><p>La sección de comentarios se gestiona a través de la plataforma 'giscus', integrada con las 'Discusiones' de GitHub. Para comentar, necesitas una cuenta de GitHub. Puedes elegir una categoría para tu comentario. Ten en cuenta que todos los comentarios son <strong>públicos</strong> y quedan asociados a la categoría que elijas en GitHub.</p><h3>Vínculos y Afiliación</h3><p>Este sitio <strong>NO</strong> está afiliado, asociado, autorizado ni respaldado de ninguna manera por Lunarite Studio, el desarrollador de 'Wasteland Story RPG'. Es un proyecto independiente y sin fines de lucro.</p><p><em>Tanto el contenido como las funcionalidades de esta página están sujetos a cambios sin previo aviso. ¡Disfruta de tu estancia en el yermo!</em></p>"
     }
 }
