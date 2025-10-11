@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // --- Estado Global ---
+    // --- Estado Global de la Aplicación ---
     let appData = {}, fuse, visibleCards = [], activeModal = null, caughtErrors = [];
     let audioContext;
     const audioBuffers = {};
@@ -28,14 +28,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- INICIALIZACIÓN ---
     async function init() {
         try {
-            const response = await fetch("app_data.json");
+            // Se añade un `cache: 'no-store'` para evitar problemas de caché con el JSON.
+            const response = await fetch("app_data.json", { cache: 'no-store' });
             if (!response.ok) throw new Error(`app_data.json no encontrado (status: ${response.status})`);
             appData = await response.json();
             DOMElements.activationText.textContent = "Listo para el pacto.";
             DOMElements.activationOverlay.addEventListener("click", activateApp, { once: true });
         } catch (error) {
             handleError("init", error);
-            DOMElements.activationText.textContent = "Error crítico. Verifica que app_data.json esté en la raíz del proyecto.";
+            DOMElements.activationText.textContent = "Error crítico. Verifica que app_data.json está en la raíz.";
         }
     }
 
@@ -50,70 +51,21 @@ document.addEventListener("DOMContentLoaded", () => {
         initializeFuseSearch();
         updateCardCounter();
     }
-    
-    // --- MANEJO DE MODALES ---
-    const openModal = (modal) => {
-        if (!modal) return;
-        activeModal = modal;
-        modal.classList.add("visible");
-        DOMElements.modalOverlay.classList.add("visible");
-        document.body.classList.add("no-scroll");
-    };
 
-    const closeModal = () => {
-        if (!activeModal) return;
-        playSound("button");
-        activeModal.classList.remove("visible");
-        DOMElements.modalOverlay.classList.remove("visible");
-        document.body.classList.remove("no-scroll");
-        if (activeModal === DOMElements.modals.comments) {
-            const giscusContainer = document.getElementById("giscus-container");
-            if (giscusContainer) {
-                giscusContainer.classList.add("hidden");
-                giscusContainer.innerHTML = '';
-            }
-            document.getElementById("comment-categories-container")?.classList.remove("hidden");
-        }
-        activeModal = null;
-    };
-    
-    // --- FUNCIONES DE LA INTERFAZ ---
+    // --- LÓGICA DE MODALES Y PANELES ---
+    const openModal = (modal) => { if (modal) { activeModal = modal; modal.classList.add("visible"); DOMElements.modalOverlay.classList.add("visible"); document.body.classList.add("no-scroll"); }};
+    const closeModal = () => { if (activeModal) { playSound("button"); activeModal.classList.remove("visible"); DOMElements.modalOverlay.classList.remove("visible"); document.body.classList.remove("no-scroll"); activeModal = null; }};
+
     const showChangelog = () => {
         playSound("logS");
         const { changelog } = DOMElements.modals;
-        if (!changelog || !appData.changelog) return;
         changelog.innerHTML = `<button class="close-modal-btn" aria-label="Cerrar">X</button><h2>Novedades (${appData.changelog.version})</h2><ul>${appData.changelog.changes.map(c => `<li>${c}</li>`).join("")}</ul><small>${appData.changelog.ai_note}</small>`;
         openModal(changelog);
     };
 
-    const showLegalModal = () => {
-        playSound("logS");
-        const { legal } = DOMElements.modals;
-        if (!legal || !appData.legal_text) return;
-        legal.innerHTML = `<button class="close-modal-btn" aria-label="Cerrar">X</button><h2>${appData.legal_text.title}</h2>${appData.legal_text.content}`;
-        openModal(legal);
-    };
-    
-    const showCommentsModal = () => {
-        playSound("button");
-        const container = document.getElementById("comment-categories-container");
-        if (!container || !appData.ui_text.comment_categories) return;
-        container.innerHTML = "";
-        appData.ui_text.comment_categories.forEach(cat => {
-            const btn = document.createElement("button");
-            btn.className = "category-btn";
-            btn.dataset.categoryId = cat.categoryId;
-            btn.innerHTML = `<span class="icon">${cat.icon}</span><span class="info"><span class="name">${cat.name}</span><span class="description">${cat.description}</span></span>`;
-            container.appendChild(btn);
-        });
-        openModal(DOMElements.modals.comments);
-    };
-
     const loadGiscus = (categoryId) => {
-        document.getElementById("comment-categories-container")?.classList.add("hidden");
         const giscusContainer = document.getElementById("giscus-container");
-        if (!giscusContainer) return;
-        giscusContainer.innerHTML = '';
+        giscusContainer.innerHTML = ''; 
         giscusContainer.classList.remove("hidden");
         const script = Object.assign(document.createElement("script"), {
             src: "https://giscus.app/client.js", "data-repo": "CZeta415/WS-CardAlbum", "data-repo-id": "R_kgDOPrKawQ",
@@ -123,8 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         giscusContainer.appendChild(script);
     };
-
-    // --- MANEJO DE CARTAS ---
+    
+    // --- LÓGICA DE CARTAS ---
     const dealCards = () => {
         playSound("deal");
         document.getElementById("initial-deck-container")?.classList.add("hidden");
@@ -134,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const displayCards = (cards) => {
         visibleCards = cards;
-        if (!DOMElements.cardGallery) return;
         DOMElements.cardGallery.innerHTML = "";
         document.getElementById('no-results-message').classList.toggle('hidden', cards.length > 0);
         cards.forEach((card, index) => DOMElements.cardGallery.appendChild(createCardElement(card, index)));
@@ -146,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
         el.style.animationDelay = `${index * 50}ms`;
         el.dataset.id = card.id;
         if (settings.seenCards.includes(card.id)) el.classList.add("seen", "flipped");
-        // CORRECCIÓN: Se vuelve a añadir el texto "Identificar".
         el.innerHTML = `<div class="card-inner">
             <div class="card-face card-back" style="background-image: url('${getCardBackUrl(index)}')">
                 <span class="card-back-prompt">${appData.ui_text.identify_prompt || "Identificar"}</span>
@@ -157,20 +107,15 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
         return el;
     };
-    
+
     const handleCardClick = (cardEl) => {
         const cardId = parseInt(cardEl.dataset.id, 10);
-        const wasFlipped = cardEl.classList.contains("flipped");
-        if (!wasFlipped) {
+        if (!cardEl.classList.contains("flipped")) {
             playSound("flip");
             cardEl.classList.add("seen", "flipped");
-            if (!settings.seenCards.includes(cardId)) {
-                settings.seenCards.push(cardId);
-                saveSettings();
-                updateCardCounter();
-            }
+            if (!settings.seenCards.includes(cardId)) { settings.seenCards.push(cardId); saveSettings(); updateCardCounter(); }
         }
-        setTimeout(() => openCardViewModal(cardId), wasFlipped ? 50 : 350);
+        setTimeout(() => openCardViewModal(cardId), 300);
     };
     
     const openCardViewModal = (cardId) => {
@@ -199,55 +144,40 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(`input[name="aura-effect"][value="${settings.auraEffect}"]`).checked = true;
         document.getElementById('master-volume-slider').value = settings.masterVolume;
         document.querySelectorAll("#sound-mute-toggles input").forEach(t => t.checked = settings.mutedSounds.includes(t.dataset.sound));
-        displayCards(visibleCards);
+        if(visibleCards.length > 0) displayCards(visibleCards);
     };
-
-    // --- AUDIO ---
+    const getCardBackUrl = (index) => settings.cardBack === 'default' ? `assets/card_back/card_back${index % 3 + 1}.webp` : settings.cardBack;
+    
+    // --- AUDIO Y ERRORES ---
     async function loadAudio() {
         if (!audioContext) return;
-        await Promise.all(Object.entries(audioSources).map(async ([name, url]) => {
-            try {
-                const res = await fetch(url);
-                const buffer = await res.arrayBuffer();
-                audioBuffers[name] = await audioContext.decodeAudioData(buffer);
-            } catch (error) { handleError(`loadAudio:${name}`, error); }
-        }));
+        await Promise.all(Object.entries(audioSources).map(async ([name, url]) => { try { const res = await fetch(url); const buffer = await res.arrayBuffer(); audioBuffers[name] = await audioContext.decodeAudioData(buffer); } catch (error) { handleError(`loadAudio:${name}`, error); } }));
     }
     const playSound = (name) => {
         if (audioContext?.state === "suspended") audioContext.resume();
         if (!audioContext || !audioBuffers[name] || settings.mutedSounds.includes(name)) return;
-        const source = audioContext.createBufferSource();
-        source.buffer = audioBuffers[name];
-        const gainNode = audioContext.createGain();
-        gainNode.gain.value = settings.masterVolume;
-        source.connect(gainNode).connect(audioContext.destination);
-        source.start(0);
+        const source = audioContext.createBufferSource(); source.buffer = audioBuffers[name]; const gainNode = audioContext.createGain(); gainNode.gain.value = settings.masterVolume; source.connect(gainNode).connect(audioContext.destination); source.start(0);
     };
-    const getCardBackUrl = (index) => settings.cardBack === 'default' ? `assets/card_back/card_back${index % 3 + 1}.webp` : settings.cardBack;
+    const handleError = (source, error) => { caughtErrors.push({ source, message: error.message }); console.error(`Error in ${source}:`, error); };
 
-    // --- MANEJO DE EVENTOS ---
+    // --- MANEJO DE EVENTOS ROBUSTO ---
     function setupEventListeners() {
         DOMElements.initialDeck?.addEventListener("click", dealCards, { once: true });
         
-        // --- DELEGACIÓN DE EVENTOS CENTRALIZADA ---
+        // Delegación de eventos para clics
         document.body.addEventListener('click', e => {
             const target = e.target;
             const actionBtnId = target.closest('.settings-btn')?.id;
             
-            // Cerrar Modales/Paneles
             if (target.closest('.close-modal-btn') || target === DOMElements.modalOverlay) closeModal();
-            if (DOMElements.settingsPanel.classList.contains('visible') && !target.closest('#settings-panel') && !target.closest('#settings-toggle-btn')) DOMElements.settingsPanel.classList.remove('visible');
-
-            // Abrir Modales/Paneles
             if (target.closest('#changelog-btn')) showChangelog();
-            if (target.closest('#comments-toggle-btn')) showCommentsModal();
+            if (target.closest('#comments-toggle-btn')) openModal(DOMElements.modals.comments);
             if (target.closest('#settings-toggle-btn')) { e.stopPropagation(); playSound("button"); DOMElements.settingsPanel.classList.toggle("visible"); }
-
-            // Interacciones
+            if (DOMElements.settingsPanel.classList.contains('visible') && !target.closest('#settings-panel') && !target.closest('#settings-toggle-btn')) DOMElements.settingsPanel.classList.remove('visible');
             if (target.closest('.card-container')) handleCardClick(target.closest('.card-container'));
             if (target.closest('.category-btn')) loadGiscus(target.closest('.category-btn').dataset.categoryId);
-            
-            // CORRECCIÓN: Botones de Ajustes
+
+            // CORRECCIÓN CLAVE: Listener para los botones de ajustes.
             if(actionBtnId) {
                 playSound('button');
                 if(actionBtnId === 'reveal-all-btn') { if(confirm("¿Revelar todos los pactos?")) { settings.seenCards = appData.cards.map(c => c.id); saveSettings(); applySettings(); updateCardCounter(); }}
@@ -256,9 +186,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(actionBtnId === 'legal-notice-btn') showLegalModal();
                 if(actionBtnId === 'debug-copy-btn') navigator.clipboard.writeText(JSON.stringify({ts:new Date().toISOString(), ...settings, errors: caughtErrors})).then(() => alert("Info de depuración copiada."));
             }
-
-            // CORRECCIÓN: Personalización en Ajustes
-            if (target.closest('.color-swatch') || target.closest('.card-back-option')) {
+        });
+        
+        // CORRECCIÓN CLAVE: Listeners para los inputs de ajustes.
+        DOMElements.settingsPanel?.addEventListener('input', e => {
+            const target = e.target;
+            if(target.id === 'master-volume-slider') { settings.masterVolume = parseFloat(target.value); playSound('button'); saveSettings(); }
+            if(target.closest('#sound-mute-toggles')) { settings.mutedSounds = [...document.querySelectorAll('#sound-mute-toggles input:checked')].map(cb => cb.dataset.sound); saveSettings(); }
+            if(target.name === 'aura-effect') { settings.auraEffect = target.value; applySettings(); saveSettings(); }
+        });
+        DOMElements.settingsPanel?.addEventListener('click', e => {
+            const target = e.target;
+             if (target.closest('.color-swatch') || target.closest('.card-back-option')) {
                  playSound('button');
                  if(target.closest('.color-swatch')) settings.themeColor = target.dataset.color;
                  if(target.closest('.card-back-option')) settings.cardBack = target.dataset.back;
@@ -267,19 +206,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Eventos de input (no son de click)
+        // Búsqueda
         DOMElements.searchBox?.addEventListener("input", () => {
              const query = DOMElements.searchBox.value.trim();
              DOMElements.clearSearchBtn.style.display = query ? 'block' : 'none';
              displayCards(query ? fuse.search(query).map(r => r.item) : appData.cards);
         });
         DOMElements.clearSearchBtn?.addEventListener('click', () => { DOMElements.searchBox.value = ''; DOMElements.searchBox.dispatchEvent(new Event('input')); });
-
-        document.getElementById('master-volume-slider')?.addEventListener('input', e => { settings.masterVolume = parseFloat(e.target.value); saveSettings(); });
-        document.getElementById('sound-mute-toggles')?.addEventListener('change', () => { settings.mutedSounds = [...document.querySelectorAll('#sound-mute-toggles input:checked')].map(cb => cb.dataset.sound); saveSettings(); });
-        document.querySelector('.setting-toggle')?.addEventListener('change', (e) => { if (e.target.name === 'aura-effect') { settings.auraEffect = e.target.value; applySettings(); saveSettings(); } });
     }
-    const handleError = (source, error) => { caughtErrors.push({ source, message: error.message }); console.error(`Error in ${source}:`, error); };
-
     init();
 });
