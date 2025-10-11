@@ -51,15 +51,14 @@
         ],
         "comment_categories": [
             { "name": "Anuncios", "categoryId": "DIC_kwDOPrKawc4Cwfmi", "icon": "📣", "description": "Novedades y anuncios oficiales." },
-            { "name": "Generals", "categoryId": "DIC_kwDOPrKawc4Cwfmj", "icon": "💬", "description": "Discusiones generales sobre el juego." },
-            { "name": "Ideas", "categoryId": "DIC_kwDOPrKawc4Cwfmk", "icon": "💡", "description": "Sugiere nuevas funciones o mejoras." },
-            { "name": "Ayuda y Más", "categoryId": "DIC_kwDOPrKawc4Cwfmq", "icon": "🙏", "description": "Pide ayuda o comparte tus dudas." },
-            { "name": "Reglas", "categoryId": "DIC_kwDOPrKawc4Cwfms", "icon": "👁️", "description": "Consulta y discute las reglas." },
-            { "name": "Votaciones", "categoryId": "DIC_kwDOPrKawc4Cwfmv", "icon": "🗳️", "description": "Participa en encuestas de la comunidad." }
+            { "name": "General", "categoryId": "DIC_kwDOPrKawc4Cwfmj", "icon": "💬", "description": "Discusiones generales sobre el juego." },
+            { "name": "Ideas", "categoryId": "DIC_kwDOPrKawc4Cwfml", "icon": "💡", "description": "Sugiere nuevas funciones o mejoras." },
+            { "name": "Ayuda y Más", "categoryId": "DIC_kwDOPrKawc4Cwfmk", "icon": "🙏", "description": "Pide ayuda o comparte tus dudas." },
+            { "name": "Reglas", "categoryId": "DIC_kwDOPrKawc4Cwfmm", "icon": "👁️", "description": "Consulta y discute las reglas." },
+            { "name": "Votaciones", "categoryId": "DIC_kwDOPrKawc4Cwfmn", "icon": "🗳️", "description": "Participa en encuestas de la comunidad." }
         ]
     },
     "legal_text": {
         "title": "Pautas de la Comunidad y Aviso Legal",
         "content": "<h3>Propósito del Sitio</h3><p>Esta página es un recurso <strong>no oficial</strong>, creado por un fan para la comunidad del juego 'Wasteland Story RPG'. Su único fin es servir como un álbum visual de las cartas (pactos) disponibles en el juego para facilitar su consulta.</p><h3>Recopilación y Uso de Datos</h3><p>La privacidad es fundamental. Este sitio <strong>NO</strong> recopila, almacena ni comparte información personal identificable de sus usuarios. Los únicos datos que se guardan son en el almacenamiento local de tu navegador ('Local Storage') para recordar tus preferencias de personalización y tu progreso. Estos datos nunca salen de tu dispositivo.</p><p>Se utiliza un contador de visitas anónimo (CounterAPI) que no rastrea información personal. Para ayudar a solucionar problemas técnicos, se ha implementado una herramienta de depuración opcional en los ajustes.</p><h3>Sistema de Comentarios (giscus)</h3><p>La sección de comentarios se gestiona a través de la plataforma 'giscus', integrada con las 'Discusiones' de GitHub. Para comentar, necesitas una cuenta de GitHub. Puedes elegir una categoría para tu comentario. Ten en cuenta que todos los comentarios son <strong>públicos</strong> y quedan asociados a la categoría que elijas en GitHub.</p><h3>Vínculos y Afiliación</h3><p>Este sitio <strong>NO</strong> está afiliado, asociado, autorizado ni respaldado de ninguna manera por Lunarite Studio, el desarrollador de 'Wasteland Story RPG'. Es un proyecto independiente y sin fines de lucro.</p><p><em>Tanto el contenido como las funcionalidades de esta página están sujetos a cambios sin previo aviso. ¡Disfruta de tu estancia en el yermo!</em></p>"
     }
-}

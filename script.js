@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // --- Estado Global de la Aplicación ---
-    let appData = {}, fuse, visibleCards = [], activeModal = null, caughtErrors = [];
+    let appData = {}, fuse, visibleCards = [], currentCardIndex = -1, activeModal = null, caughtErrors = [];
     let audioContext;
     const audioBuffers = {};
     const audioSources = { deal: "assets/sounds/CardRep.mp3", flip: "assets/sounds/Flip.mp3", roll: "assets/sounds/CardRolls.mp3", logS: "assets/sounds/LogS.mp3", button: "assets/sounds/button.mp3" };
@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- INICIALIZACIÓN ---
     async function init() {
         try {
-            // Se añade un `cache: 'no-store'` para evitar problemas de caché con el JSON.
             const response = await fetch("app_data.json", { cache: 'no-store' });
             if (!response.ok) throw new Error(`app_data.json no encontrado (status: ${response.status})`);
             appData = await response.json();
@@ -36,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
             DOMElements.activationOverlay.addEventListener("click", activateApp, { once: true });
         } catch (error) {
             handleError("init", error);
-            DOMElements.activationText.textContent = "Error crítico. Verifica que app_data.json está en la raíz.";
+            DOMElements.activationText.textContent = "Error crítico. Verifica que app_data.json existe en la raíz.";
         }
     }
 
@@ -58,74 +57,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const showChangelog = () => {
         playSound("logS");
-        const { changelog } = DOMElements.modals;
-        changelog.innerHTML = `<button class="close-modal-btn" aria-label="Cerrar">X</button><h2>Novedades (${appData.changelog.version})</h2><ul>${appData.changelog.changes.map(c => `<li>${c}</li>`).join("")}</ul><small>${appData.changelog.ai_note}</small>`;
-        openModal(changelog);
+        DOMElements.modals.changelog.innerHTML = `<button class="close-modal-btn" aria-label="Cerrar">X</button><h2>Novedades (${appData.changelog.version})</h2><ul>${appData.changelog.changes.map(c => `<li>${c}</li>`).join("")}</ul><small>${appData.changelog.ai_note}</small>`;
+        openModal(DOMElements.modals.changelog);
     };
 
     const loadGiscus = (categoryId) => {
         const giscusContainer = document.getElementById("giscus-container");
-        giscusContainer.innerHTML = ''; 
-        giscusContainer.classList.remove("hidden");
-        const script = Object.assign(document.createElement("script"), {
-            src: "https://giscus.app/client.js", "data-repo": "CZeta415/WS-CardAlbum", "data-repo-id": "R_kgDOPrKawQ",
-            "data-category-id": categoryId, "data-mapping": "pathname", "data-strict": "0", "data-reactions-enabled": "1",
-            "data-emit-metadata": "0", "data-input-position": "bottom", "data-theme": "preferred_color_scheme",
-            "data-lang": "es", crossorigin: "anonymous", async: true
-        });
-        giscusContainer.appendChild(script);
+        if(giscusContainer){
+            document.getElementById("comment-categories-container")?.classList.add("hidden");
+            giscusContainer.innerHTML = ''; 
+            giscusContainer.classList.remove("hidden");
+            const script = Object.assign(document.createElement("script"), {
+                src: "https://giscus.app/client.js", "data-repo": "CZeta415/WS-CardAlbum", "data-repo-id": "R_kgDOPrKawQ",
+                "data-category-id": categoryId, "data-mapping": "pathname", "data-strict": "0", "data-reactions-enabled": "1",
+                "data-emit-metadata": "0", "data-input-position": "bottom", "data-theme": "preferred_color_scheme",
+                "data-lang": "es", crossorigin: "anonymous", async: true
+            });
+            giscusContainer.appendChild(script);
+        }
     };
     
     // --- LÓGICA DE CARTAS ---
-    const dealCards = () => {
-        playSound("deal");
-        document.getElementById("initial-deck-container")?.classList.add("hidden");
-        if (DOMElements.searchBox) { DOMElements.searchBox.disabled = false; DOMElements.searchBox.focus(); }
-        displayCards(appData.cards);
-    };
-
-    const displayCards = (cards) => {
-        visibleCards = cards;
-        DOMElements.cardGallery.innerHTML = "";
-        document.getElementById('no-results-message').classList.toggle('hidden', cards.length > 0);
-        cards.forEach((card, index) => DOMElements.cardGallery.appendChild(createCardElement(card, index)));
-    };
-
-    const createCardElement = (card, index) => {
-        const el = document.createElement("div");
-        el.className = "card-container";
-        el.style.animationDelay = `${index * 50}ms`;
-        el.dataset.id = card.id;
-        if (settings.seenCards.includes(card.id)) el.classList.add("seen", "flipped");
-        el.innerHTML = `<div class="card-inner">
-            <div class="card-face card-back" style="background-image: url('${getCardBackUrl(index)}')">
-                <span class="card-back-prompt">${appData.ui_text.identify_prompt || "Identificar"}</span>
-            </div>
-            <div class="card-face card-front" style="--card-front-image: url('assets/cards/card_${card.id}.webp')">
-                <h3 class="card-title">${card.title}</h3>
-            </div>
-        </div>`;
-        return el;
-    };
+    const dealCards = () => { playSound("deal"); document.getElementById("initial-deck-container")?.classList.add("hidden"); if (DOMElements.searchBox) { DOMElements.searchBox.disabled = false; DOMElements.searchBox.focus(); } displayCards(appData.cards); };
+    const displayCards = (cards) => { visibleCards = cards; DOMElements.cardGallery.innerHTML = ""; document.getElementById('no-results-message').classList.toggle('hidden', cards.length > 0); cards.forEach((card, index) => DOMElements.cardGallery.appendChild(createCardElement(card, index))); };
+    const createCardElement = (card, index) => { const el = document.createElement("div"); el.className = "card-container"; el.style.animationDelay = `${index * 50}ms`; el.dataset.id = card.id; if (settings.seenCards.includes(card.id)) el.classList.add("seen", "flipped"); el.innerHTML = `<div class="card-inner"><div class="card-face card-back" style="background-image: url('${getCardBackUrl(index)}')"><span class="card-back-prompt">${appData.ui_text.identify_prompt}</span></div><div class="card-face card-front" style="--card-front-image: url('assets/cards/card_${card.id}.webp')"><h3 class="card-title">${card.title}</h3></div></div>`; return el; };
 
     const handleCardClick = (cardEl) => {
         const cardId = parseInt(cardEl.dataset.id, 10);
-        if (!cardEl.classList.contains("flipped")) {
-            playSound("flip");
-            cardEl.classList.add("seen", "flipped");
-            if (!settings.seenCards.includes(cardId)) { settings.seenCards.push(cardId); saveSettings(); updateCardCounter(); }
-        }
+        if (!cardEl.classList.contains("flipped")) { playSound("flip"); cardEl.classList.add("seen", "flipped"); if (!settings.seenCards.includes(cardId)) { settings.seenCards.push(cardId); saveSettings(); updateCardCounter(); }}
         setTimeout(() => openCardViewModal(cardId), 300);
     };
     
     const openCardViewModal = (cardId) => {
         const card = appData.cards.find(c => c.id === cardId);
         if(!card) return;
+        currentCardIndex = visibleCards.findIndex(c => c.id === cardId); // <-- Faltaba esto
         document.getElementById("card-view-title").textContent = card.title;
         document.getElementById("card-view-description").innerHTML = card.description;
         document.getElementById("card-view-image").src = `assets/cards/card_${card.id}.webp`;
         openModal(DOMElements.modals.cardView);
         playSound("roll");
+    };
+
+    const navigateCard = (direction) => {
+        if(currentCardIndex === -1) return;
+        currentCardIndex = (currentCardIndex + direction + visibleCards.length) % visibleCards.length;
+        const card = visibleCards[currentCardIndex];
+        if(!card) return;
+        document.getElementById("card-view-title").textContent = card.title;
+        document.getElementById("card-view-description").innerHTML = card.description;
+        document.getElementById("card-view-image").src = `assets/cards/card_${card.id}.webp`;
+        playSound('roll');
     };
 
     // --- BÚSQUEDA Y OTROS ---
@@ -146,25 +128,25 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#sound-mute-toggles input").forEach(t => t.checked = settings.mutedSounds.includes(t.dataset.sound));
         if(visibleCards.length > 0) displayCards(visibleCards);
     };
-    const getCardBackUrl = (index) => settings.cardBack === 'default' ? `assets/card_back/card_back${index % 3 + 1}.webp` : settings.cardBack;
+    
+    // CORRECCIÓN: Lógica robusta para texturas del reverso
+    const getCardBackUrl = (index) => {
+        if (settings.cardBack === 'default') {
+            const backs = ["assets/card_back/card_back.webp", "assets/card_back/card_back2.webp", "assets/card_back/card_back3.webp"];
+            return backs[index % backs.length];
+        }
+        return settings.cardBack;
+    };
     
     // --- AUDIO Y ERRORES ---
-    async function loadAudio() {
-        if (!audioContext) return;
-        await Promise.all(Object.entries(audioSources).map(async ([name, url]) => { try { const res = await fetch(url); const buffer = await res.arrayBuffer(); audioBuffers[name] = await audioContext.decodeAudioData(buffer); } catch (error) { handleError(`loadAudio:${name}`, error); } }));
-    }
-    const playSound = (name) => {
-        if (audioContext?.state === "suspended") audioContext.resume();
-        if (!audioContext || !audioBuffers[name] || settings.mutedSounds.includes(name)) return;
-        const source = audioContext.createBufferSource(); source.buffer = audioBuffers[name]; const gainNode = audioContext.createGain(); gainNode.gain.value = settings.masterVolume; source.connect(gainNode).connect(audioContext.destination); source.start(0);
-    };
+    async function loadAudio() { if (!audioContext) return; await Promise.all(Object.entries(audioSources).map(async ([n, u]) => { try { const r=await fetch(u), b=await r.arrayBuffer(); audioBuffers[n]=await audioContext.decodeAudioData(b); } catch(e){handleError(`loadAudio:${n}`,e)} }));}
+    const playSound = (name) => { if(audioContext?.state==="suspended")audioContext.resume(); if(!audioContext||!audioBuffers[name]||settings.mutedSounds.includes(name))return; const s=audioContext.createBufferSource();s.buffer=audioBuffers[name];const g=audioContext.createGain();g.gain.value=settings.masterVolume;s.connect(g).connect(audioContext.destination);s.start(0);};
     const handleError = (source, error) => { caughtErrors.push({ source, message: error.message }); console.error(`Error in ${source}:`, error); };
 
     // --- MANEJO DE EVENTOS ROBUSTO ---
     function setupEventListeners() {
         DOMElements.initialDeck?.addEventListener("click", dealCards, { once: true });
         
-        // Delegación de eventos para clics
         document.body.addEventListener('click', e => {
             const target = e.target;
             const actionBtnId = target.closest('.settings-btn')?.id;
@@ -177,40 +159,39 @@ document.addEventListener("DOMContentLoaded", () => {
             if (target.closest('.card-container')) handleCardClick(target.closest('.card-container'));
             if (target.closest('.category-btn')) loadGiscus(target.closest('.category-btn').dataset.categoryId);
 
-            // CORRECCIÓN CLAVE: Listener para los botones de ajustes.
+            // CORRECCIÓN: Eventos para flechas de navegación
+            if (target.id === 'prev-card-btn') navigateCard(-1);
+            if (target.id === 'next-card-btn') navigateCard(1);
+            
             if(actionBtnId) {
                 playSound('button');
                 if(actionBtnId === 'reveal-all-btn') { if(confirm("¿Revelar todos los pactos?")) { settings.seenCards = appData.cards.map(c => c.id); saveSettings(); applySettings(); updateCardCounter(); }}
                 if(actionBtnId === 'clear-seen-btn') { if(confirm("¿Volver a sellar todos los pactos?")) { settings.seenCards = []; saveSettings(); window.location.reload(); }}
                 if(actionBtnId === 'reset-settings-btn') { if(confirm("¿Borrar TODOS los datos y ajustes?")) { localStorage.removeItem("grimorioSettingsV5"); window.location.reload(); }}
-                if(actionBtnId === 'legal-notice-btn') showLegalModal();
+                if(actionBtnId === 'legal-notice-btn') { DOMElements.modals.legal.innerHTML=`<button class="close-modal-btn" aria-label="Cerrar">X</button><h2>${appData.legal_text.title}</h2>${appData.legal_text.content}`; openModal(DOMElements.modals.legal); }
                 if(actionBtnId === 'debug-copy-btn') navigator.clipboard.writeText(JSON.stringify({ts:new Date().toISOString(), ...settings, errors: caughtErrors})).then(() => alert("Info de depuración copiada."));
             }
         });
         
-        // CORRECCIÓN CLAVE: Listeners para los inputs de ajustes.
         DOMElements.settingsPanel?.addEventListener('input', e => {
             const target = e.target;
-            if(target.id === 'master-volume-slider') { settings.masterVolume = parseFloat(target.value); playSound('button'); saveSettings(); }
+            playSound('button');
+            if(target.id === 'master-volume-slider') { settings.masterVolume = parseFloat(target.value); saveSettings(); }
             if(target.closest('#sound-mute-toggles')) { settings.mutedSounds = [...document.querySelectorAll('#sound-mute-toggles input:checked')].map(cb => cb.dataset.sound); saveSettings(); }
             if(target.name === 'aura-effect') { settings.auraEffect = target.value; applySettings(); saveSettings(); }
         });
         DOMElements.settingsPanel?.addEventListener('click', e => {
-            const target = e.target;
-             if (target.closest('.color-swatch') || target.closest('.card-back-option')) {
+            if (e.target.closest('.color-swatch') || e.target.closest('.card-back-option')) {
                  playSound('button');
-                 if(target.closest('.color-swatch')) settings.themeColor = target.dataset.color;
-                 if(target.closest('.card-back-option')) settings.cardBack = target.dataset.back;
+                 if(e.target.closest('.color-swatch')) settings.themeColor = e.target.dataset.color;
+                 if(e.target.closest('.card-back-option')) settings.cardBack = e.target.dataset.back;
                  applySettings();
                  saveSettings();
             }
         });
 
-        // Búsqueda
         DOMElements.searchBox?.addEventListener("input", () => {
-             const query = DOMElements.searchBox.value.trim();
-             DOMElements.clearSearchBtn.style.display = query ? 'block' : 'none';
-             displayCards(query ? fuse.search(query).map(r => r.item) : appData.cards);
+             const query = DOMElements.searchBox.value.trim(); DOMElements.clearSearchBtn.style.display = query ? 'block' : 'none'; displayCards(query ? fuse.search(query).map(r => r.item) : appData.cards);
         });
         DOMElements.clearSearchBtn?.addEventListener('click', () => { DOMElements.searchBox.value = ''; DOMElements.searchBox.dispatchEvent(new Event('input')); });
     }
