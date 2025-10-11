@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // --- Estado Global de la Aplicación ---
+    // --- Estado Global ---
     let appData = {}, fuse, visibleCards = [], activeModal = null, caughtErrors = [];
     let audioContext;
     const audioBuffers = {};
@@ -35,26 +35,22 @@ document.addEventListener("DOMContentLoaded", () => {
             DOMElements.activationOverlay.addEventListener("click", activateApp, { once: true });
         } catch (error) {
             handleError("init", error);
-            DOMElements.activationText.textContent = "Error crítico. Verifica que app_data.json existe en la raíz.";
+            DOMElements.activationText.textContent = "Error crítico. Verifica que app_data.json esté en la raíz del proyecto.";
         }
     }
 
     async function activateApp() {
         DOMElements.activationOverlay.classList.add("hidden");
         document.body.classList.remove("no-scroll");
-        try {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            await loadAudio();
-            loadSettings();
-            applySettings();
-            setupEventListeners();
-            initializeFuseSearch();
-            updateCardCounter();
-        } catch (error) {
-            handleError("activateApp", error);
-        }
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        await loadAudio();
+        loadSettings();
+        applySettings();
+        setupEventListeners();
+        initializeFuseSearch();
+        updateCardCounter();
     }
-
+    
     // --- MANEJO DE MODALES ---
     const openModal = (modal) => {
         if (!modal) return;
@@ -71,13 +67,17 @@ document.addEventListener("DOMContentLoaded", () => {
         DOMElements.modalOverlay.classList.remove("visible");
         document.body.classList.remove("no-scroll");
         if (activeModal === DOMElements.modals.comments) {
-            document.getElementById("giscus-container")?.classList.add("hidden");
+            const giscusContainer = document.getElementById("giscus-container");
+            if (giscusContainer) {
+                giscusContainer.classList.add("hidden");
+                giscusContainer.innerHTML = '';
+            }
             document.getElementById("comment-categories-container")?.classList.remove("hidden");
         }
         activeModal = null;
     };
     
-    // --- INTERACCIÓN DE LA INTERFAZ ---
+    // --- FUNCIONES DE LA INTERFAZ ---
     const showChangelog = () => {
         playSound("logS");
         const { changelog } = DOMElements.modals;
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         legal.innerHTML = `<button class="close-modal-btn" aria-label="Cerrar">X</button><h2>${appData.legal_text.title}</h2>${appData.legal_text.content}`;
         openModal(legal);
     };
-
+    
     const showCommentsModal = () => {
         playSound("button");
         const container = document.getElementById("comment-categories-container");
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         giscusContainer.appendChild(script);
     };
-    
+
     // --- MANEJO DE CARTAS ---
     const dealCards = () => {
         playSound("deal");
@@ -134,11 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const displayCards = (cards) => {
         visibleCards = cards;
-        const { cardGallery, noResultsMessage } = DOMElements;
-        if (!cardGallery) return;
-        cardGallery.innerHTML = "";
+        if (!DOMElements.cardGallery) return;
+        DOMElements.cardGallery.innerHTML = "";
         document.getElementById('no-results-message').classList.toggle('hidden', cards.length > 0);
-        cards.forEach((card, index) => cardGallery.appendChild(createCardElement(card, index)));
+        cards.forEach((card, index) => DOMElements.cardGallery.appendChild(createCardElement(card, index)));
     };
 
     const createCardElement = (card, index) => {
@@ -147,7 +146,15 @@ document.addEventListener("DOMContentLoaded", () => {
         el.style.animationDelay = `${index * 50}ms`;
         el.dataset.id = card.id;
         if (settings.seenCards.includes(card.id)) el.classList.add("seen", "flipped");
-        el.innerHTML = `<div class="card-inner"><div class="card-face card-back" style="background-image: url('${getCardBackUrl(index)}')"></div><div class="card-face card-front" style="--card-front-image: url('assets/cards/card_${card.id}.webp')"><h3 class="card-title">${card.title}</h3></div></div>`;
+        // CORRECCIÓN: Se vuelve a añadir el texto "Identificar".
+        el.innerHTML = `<div class="card-inner">
+            <div class="card-face card-back" style="background-image: url('${getCardBackUrl(index)}')">
+                <span class="card-back-prompt">${appData.ui_text.identify_prompt || "Identificar"}</span>
+            </div>
+            <div class="card-face card-front" style="--card-front-image: url('assets/cards/card_${card.id}.webp')">
+                <h3 class="card-title">${card.title}</h3>
+            </div>
+        </div>`;
         return el;
     };
     
@@ -165,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         setTimeout(() => openCardViewModal(cardId), wasFlipped ? 50 : 350);
     };
-
+    
     const openCardViewModal = (cardId) => {
         const card = appData.cards.find(c => c.id === cardId);
         if(!card) return;
@@ -179,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- BÚSQUEDA Y OTROS ---
     const initializeFuseSearch = () => { if (appData.cards) fuse = new Fuse(appData.cards, { keys: ["title"], threshold: 0.4 }); };
     const updateCardCounter = () => document.getElementById('card-counter').textContent = `${settings.seenCards.length} / ${appData.cards.length} Reveladas`;
-    
+
     // --- LÓGICA DE AJUSTES ---
     const loadSettings = () => { try { const s = localStorage.getItem("grimorioSettingsV5"); if(s) Object.assign(settings, JSON.parse(s)); } catch(e) { handleError("loadSettings", e); }};
     const saveSettings = () => { try { localStorage.setItem("grimorioSettingsV5", JSON.stringify(settings)); } catch(e) { handleError("saveSettings", e); }};
@@ -187,23 +194,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const applySettings = () => {
         document.documentElement.style.setProperty("--theme-accent-color", settings.themeColor);
         document.body.className = (document.body.className.replace(/aura-effect-\w+/g, '') + ` aura-effect-${settings.auraEffect}`).trim();
-        const checkedAura = document.querySelector(`input[name="aura-effect"][value="${settings.auraEffect}"]`);
-        if(checkedAura) checkedAura.checked = true;
+        document.querySelectorAll(".color-swatch").forEach(s => s.classList.toggle("selected", s.dataset.color === settings.themeColor));
+        document.querySelectorAll(".card-back-option").forEach(o => o.classList.toggle("selected", o.dataset.back === settings.cardBack));
+        document.querySelector(`input[name="aura-effect"][value="${settings.auraEffect}"]`).checked = true;
+        document.getElementById('master-volume-slider').value = settings.masterVolume;
+        document.querySelectorAll("#sound-mute-toggles input").forEach(t => t.checked = settings.mutedSounds.includes(t.dataset.sound));
+        displayCards(visibleCards);
     };
-    
-    const getCardBackUrl = (index) => settings.cardBack === 'default' ? `assets/card_back/card_back${(index % 3) + 1}.webp` : settings.cardBack;
-    
+
     // --- AUDIO ---
     async function loadAudio() {
         if (!audioContext) return;
-        const promises = Object.entries(audioSources).map(async ([name, url]) => {
+        await Promise.all(Object.entries(audioSources).map(async ([name, url]) => {
             try {
                 const res = await fetch(url);
                 const buffer = await res.arrayBuffer();
                 audioBuffers[name] = await audioContext.decodeAudioData(buffer);
             } catch (error) { handleError(`loadAudio:${name}`, error); }
-        });
-        await Promise.all(promises);
+        }));
     }
     const playSound = (name) => {
         if (audioContext?.state === "suspended") audioContext.resume();
@@ -215,48 +223,62 @@ document.addEventListener("DOMContentLoaded", () => {
         source.connect(gainNode).connect(audioContext.destination);
         source.start(0);
     };
+    const getCardBackUrl = (index) => settings.cardBack === 'default' ? `assets/card_back/card_back${index % 3 + 1}.webp` : settings.cardBack;
 
     // --- MANEJO DE EVENTOS ---
     function setupEventListeners() {
         DOMElements.initialDeck?.addEventListener("click", dealCards, { once: true });
         
+        // --- DELEGACIÓN DE EVENTOS CENTRALIZADA ---
         document.body.addEventListener('click', e => {
             const target = e.target;
+            const actionBtnId = target.closest('.settings-btn')?.id;
             
-            // Cerrar modales
+            // Cerrar Modales/Paneles
             if (target.closest('.close-modal-btn') || target === DOMElements.modalOverlay) closeModal();
-            
-            // Abrir modales y paneles
+            if (DOMElements.settingsPanel.classList.contains('visible') && !target.closest('#settings-panel') && !target.closest('#settings-toggle-btn')) DOMElements.settingsPanel.classList.remove('visible');
+
+            // Abrir Modales/Paneles
             if (target.closest('#changelog-btn')) showChangelog();
             if (target.closest('#comments-toggle-btn')) showCommentsModal();
-            if (target.closest('#legal-notice-btn')) showLegalModal();
-            if (target.closest('#settings-toggle-btn')) {
-                 e.stopPropagation(); playSound("button");
-                 const isVisible = DOMElements.settingsPanel.classList.toggle("visible");
-                 DOMElements.settingsToggleBtn.setAttribute('aria-expanded', isVisible);
-            }
-            if (DOMElements.settingsPanel.classList.contains('visible') && !target.closest('#settings-panel') && !target.closest('#settings-toggle-btn')) {
-                 DOMElements.settingsPanel.classList.remove("visible");
-            }
-            
+            if (target.closest('#settings-toggle-btn')) { e.stopPropagation(); playSound("button"); DOMElements.settingsPanel.classList.toggle("visible"); }
+
             // Interacciones
             if (target.closest('.card-container')) handleCardClick(target.closest('.card-container'));
             if (target.closest('.category-btn')) loadGiscus(target.closest('.category-btn').dataset.categoryId);
+            
+            // CORRECCIÓN: Botones de Ajustes
+            if(actionBtnId) {
+                playSound('button');
+                if(actionBtnId === 'reveal-all-btn') { if(confirm("¿Revelar todos los pactos?")) { settings.seenCards = appData.cards.map(c => c.id); saveSettings(); applySettings(); updateCardCounter(); }}
+                if(actionBtnId === 'clear-seen-btn') { if(confirm("¿Volver a sellar todos los pactos?")) { settings.seenCards = []; saveSettings(); window.location.reload(); }}
+                if(actionBtnId === 'reset-settings-btn') { if(confirm("¿Borrar TODOS los datos y ajustes?")) { localStorage.removeItem("grimorioSettingsV5"); window.location.reload(); }}
+                if(actionBtnId === 'legal-notice-btn') showLegalModal();
+                if(actionBtnId === 'debug-copy-btn') navigator.clipboard.writeText(JSON.stringify({ts:new Date().toISOString(), ...settings, errors: caughtErrors})).then(() => alert("Info de depuración copiada."));
+            }
+
+            // CORRECCIÓN: Personalización en Ajustes
+            if (target.closest('.color-swatch') || target.closest('.card-back-option')) {
+                 playSound('button');
+                 if(target.closest('.color-swatch')) settings.themeColor = target.dataset.color;
+                 if(target.closest('.card-back-option')) settings.cardBack = target.dataset.back;
+                 applySettings();
+                 saveSettings();
+            }
         });
 
-        // Eventos que no son de click
+        // Eventos de input (no son de click)
         DOMElements.searchBox?.addEventListener("input", () => {
              const query = DOMElements.searchBox.value.trim();
              DOMElements.clearSearchBtn.style.display = query ? 'block' : 'none';
              displayCards(query ? fuse.search(query).map(r => r.item) : appData.cards);
         });
-        
-        DOMElements.clearSearchBtn?.addEventListener('click', () => {
-             DOMElements.searchBox.value = '';
-             DOMElements.searchBox.dispatchEvent(new Event('input'));
-        });
-    }
+        DOMElements.clearSearchBtn?.addEventListener('click', () => { DOMElements.searchBox.value = ''; DOMElements.searchBox.dispatchEvent(new Event('input')); });
 
+        document.getElementById('master-volume-slider')?.addEventListener('input', e => { settings.masterVolume = parseFloat(e.target.value); saveSettings(); });
+        document.getElementById('sound-mute-toggles')?.addEventListener('change', () => { settings.mutedSounds = [...document.querySelectorAll('#sound-mute-toggles input:checked')].map(cb => cb.dataset.sound); saveSettings(); });
+        document.querySelector('.setting-toggle')?.addEventListener('change', (e) => { if (e.target.name === 'aura-effect') { settings.auraEffect = e.target.value; applySettings(); saveSettings(); } });
+    }
     const handleError = (source, error) => { caughtErrors.push({ source, message: error.message }); console.error(`Error in ${source}:`, error); };
 
     init();
