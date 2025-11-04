@@ -34,15 +34,15 @@
         { "id": 34, "title": "Monje Ciego", "description": "Tiempo de enfriamiento de habilidad -20%<br>Daño desarmado +40%<br>Daño de carga +7%<br><strong class=\"nerf-text\">Probabilidad de fallar +25%</strong>" }
     ],
     "changelog": {
-        "version": "Beta v3.8 - La Renovación Social",
+        "version": "BetaT v3.8 - Test2",
         "changes": [
-            "<strong>¡Nuevo Sistema de Comentarios por Categorías!:</strong> Se ha integrado un sistema de comentarios que utiliza las Discusiones de GitHub. Ahora puedes navegar y participar en conversaciones organizadas por categorías como 'Anuncios', 'Ideas', y 'Ayuda' para una comunidad más ordenada.",
-            "<strong>Interfaz de Usuario Rediseñada (UI/UX):</strong> Se ha mejorado la experiencia general. El botón 'LOG' ahora es 'Novedades', se añadió un botón para limpiar la búsqueda fácilmente y el acceso a los comentarios está en la cabecera, cargándose solo cuando es necesario para mantener la página rápida y despejada.",
-            "<strong>Corrección y Limpieza de Datos:</strong> Se ha revisado la base de datos de pactos para eliminar cartas duplicadas, asegurando que el contador y el álbum sean 100% precisos.",
-            "<strong>Pautas de la Comunidad Actualizadas:</strong> Los textos legales y las pautas se han reescrito para ser más claros, incluyendo detalles sobre el funcionamiento del nuevo sistema de comentarios públicos y por categorías.",
-            "<strong>Optimización y Estabilidad:</strong> Se han resuelto varios fallos de interactividad y se ha mejorado el rendimiento general del sitio para una experiencia más fluida y estable."
+            "<strong>¡Nuevo Sistema de Comentarios por Categorías!</strong> Se ha integrado un sistema de comentarios que utiliza las Discusiones de GitHub. Ahora puedes navegar y participar en conversaciones organizadas por categorías como 'Anuncios', 'Ideas', y 'Ayuda' para una comunidad más ordenada.",
+            "<strong>Interfaz de Usuario Rediseñada</strong> Se ha mejorado la experiencia general. El botón 'LOG' ahora es 'Novedades', se añadió un botón para limpiar la búsqueda fácilmente y el acceso a los comentarios está en la cabecera, cargándose solo cuando es necesario para mantener la página rápida y despejada.",
+            "<strong>Corrección y Limpieza de Datos</strong> Se ha revisado la base de datos de pactos para eliminar cartas duplicadas, asegurando que el contador y el álbum sean 100% precisos.",
+            "<strong>Pautas de la Comunidad Actualizadas</strong> Los textos legales y las pautas se han añadido y reescritos para ser más claros, incluyendo detalles sobre el funcionamiento del nuevo sistema de comentarios públicos y por categorías.",
+            "<strong>Optimización y Estabilidad</strong> Se han resuelto varios fallos de interactividad y se ha mejorado el rendimiento general del sitio para una experiencia más fluida y estable."
         ],
-        "ai_note": "(Registro de cambios mejorado y consolidado por IA para mayor claridad)"
+        "ai_note": "(Registro de cambios mejorado y organizado por IA para una mayor claridad)"
     },
     "ui_text": {
         "identify_prompt": "Identificar",
